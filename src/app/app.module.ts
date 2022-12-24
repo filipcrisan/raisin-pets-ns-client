@@ -9,6 +9,10 @@ import {AuthService} from "~/app/services/auth.service";
 import {AuthFacades} from "~/app/facades/auth.facades";
 import {AuthInterceptorService} from "~/app/services/auth-interceptor.service";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {StoreModule} from "@ngrx/store";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {environment} from "~/environments/environment";
+import {metaReducers, ROOT_REDUCERS} from "~/app/reducers";
 
 export function initializeApp(appInitializerService: AppInitializerService) {
   return () => appInitializerService.init();
@@ -32,6 +36,18 @@ const SERVICES = [
     NativeScriptModule,
     AppRoutingModule,
     NativeScriptHttpClientModule,
+    StoreModule.forRoot(ROOT_REDUCERS, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx raisin pets',
+      maxAge: 25,
+      logOnly: environment.production
+    }),
   ],
   providers: [
     FACADES,

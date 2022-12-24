@@ -6,11 +6,20 @@ import {GoogleSignin, User} from "@nativescript/google-signin/index.ios";
 import {RouterExtensions} from "@nativescript/angular";
 import * as appSettings from '@nativescript/core/application-settings';
 import {JwtHelperService} from "nativescript-angular-jwt";
+import {Store} from "@ngrx/store";
+import {authQuery} from "~/app/reducers/auth.selector";
+import {AuthActions} from "~/app/actions";
 
 @UntilDestroy()
 @Injectable()
 export class AuthFacades {
+  query = {
+    user$: this.store.select(authQuery.getUser),
+    loaded$: this.store.select(authQuery.getLoaded)
+  };
+
   constructor(
+    private store: Store,
     private authService: AuthService,
     private routerExtensions: RouterExtensions,
   ) {
@@ -51,12 +60,12 @@ export class AuthFacades {
     this.authService.login(token)
       .pipe(untilDestroyed(this))
       .subscribe({
-        // next: (user) => {
-        //   this.store.dispatch(AuthActions.loadUserSuccess({user}));
-        // },
-        // error: (error: HttpErrorResponse) => {
-        //   this.store.dispatch(AuthActions.loadUserFailure({error}));
-        // }
+        next: (user) => {
+          this.store.dispatch(AuthActions.loadUserSuccess({user}));
+        },
+        error: (error: HttpErrorResponse) => {
+          this.store.dispatch(AuthActions.loadUserFailure({error}));
+        }
       });
   }
 
@@ -83,11 +92,11 @@ export class AuthFacades {
       .subscribe({
         next: (user) => {
           appSettings.setString('token', token);
-          // this.store.dispatch(AuthActions.loadUserSuccess({user}));
+          this.store.dispatch(AuthActions.loadUserSuccess({user}));
           this.routerExtensions.navigate(['pets']).then();
         },
         error: (error: HttpErrorResponse) => {
-          // this.store.dispatch(AuthActions.loadUserFailure({error}));
+          this.store.dispatch(AuthActions.loadUserFailure({error}));
         }
       });
   }

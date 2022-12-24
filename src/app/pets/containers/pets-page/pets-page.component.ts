@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {UntilDestroy} from "@ngneat/until-destroy";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {AuthFacades} from "../../../facades/auth.facades";
+import {User} from "../../../models/user.model";
 
 @UntilDestroy()
 @Component({
@@ -10,9 +11,13 @@ import {AuthFacades} from "../../../facades/auth.facades";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PetsPageComponent {
-  constructor(
-    private authFacades: AuthFacades
-  ) {}
+  user: User;
+
+  constructor(private authFacades: AuthFacades) {
+    this.authFacades.query.user$.pipe(untilDestroyed(this)).subscribe((x) => {
+      this.user = x;
+    });
+  }
 
   logout(): void {
     this.authFacades.logout();

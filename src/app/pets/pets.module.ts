@@ -1,16 +1,17 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {PetsPageComponent} from './containers/pets-page/pets-page.component';
 import {PetsRoutingModule} from "./pets-routing.module";
+import {NativeScriptCommonModule} from "@nativescript/angular";
 
 @NgModule({
   declarations: [
     PetsPageComponent
   ],
   imports: [
-    CommonModule,
+    NativeScriptCommonModule,
     PetsRoutingModule
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class PetsModule {
 }
