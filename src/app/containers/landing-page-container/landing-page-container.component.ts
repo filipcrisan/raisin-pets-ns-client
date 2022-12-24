@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {RouterExtensions} from "@nativescript/angular";
+import {AuthFacades} from "~/app/facades/auth.facades";
 
 @Component({
   selector: 'app-landing-page-container',
@@ -8,11 +8,10 @@ import {RouterExtensions} from "@nativescript/angular";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingPageContainerComponent {
-  constructor(
-    private routerExtensions: RouterExtensions,
+  constructor(private authFacades: AuthFacades
   ) {}
 
   signInWithGoogle(): void {
-    this.routerExtensions.navigate(["pets/list"]);
+    this.authFacades.login();
   }
 }

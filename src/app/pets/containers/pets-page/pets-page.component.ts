@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {RouterExtensions} from "@nativescript/angular";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {AuthFacades} from "../../../facades/auth.facades";
 
 @UntilDestroy()
 @Component({
@@ -11,10 +11,10 @@ import {RouterExtensions} from "@nativescript/angular";
 })
 export class PetsPageComponent {
   constructor(
-    private routerExtensions: RouterExtensions,
+    private authFacades: AuthFacades
   ) {}
 
   logout(): void {
-    this.routerExtensions.navigate([""]);
+    this.authFacades.logout();
   }
 }
