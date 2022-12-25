@@ -1,8 +1,8 @@
-import {createReducer, on} from "@ngrx/store";
-import {AuthActions} from "../actions";
-import {User} from "../models/user.model";
+import { createReducer, on } from "@ngrx/store";
+import { AuthActions } from "../actions";
+import { User } from "../models/user.model";
 
-export const featureKey = 'auth';
+export const featureKey = "auth";
 
 export interface State {
   user: User;
@@ -11,19 +11,19 @@ export interface State {
 
 export const initialState: State = {
   user: null,
-  loaded: false
-}
+  loaded: false,
+};
 
 export const reducer = createReducer(
   initialState,
-  on(AuthActions.loadUserSuccess, (state, {user}) => ({
+  on(AuthActions.loadUserSuccess, (state, { user }) => ({
     ...state,
     user: user,
-    loaded: true
+    loaded: true,
   })),
-  on(AuthActions.loadUserFailure, (state, {error}) => ({
+  on(AuthActions.loadUserFailure, (state, { error }) => ({
     ...state,
     loaded: false,
-    error
+    error,
   }))
 );

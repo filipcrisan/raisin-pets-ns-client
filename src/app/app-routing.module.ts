@@ -1,29 +1,29 @@
-import {NgModule} from "@angular/core";
-import {Routes} from "@angular/router";
-import {NativeScriptRouterModule} from "@nativescript/angular";
-import {LandingPageContainerComponent} from "~/app/containers/landing-page-container/landing-page-container.component";
+import { NgModule } from "@angular/core";
+import { Routes } from "@angular/router";
+import { NativeScriptRouterModule } from "@nativescript/angular";
+import { LandingPageContainerComponent } from "~/app/containers/landing-page-container/landing-page-container.component";
 
 const routes: Routes = [
   {
-    path: 'pets',
-    loadChildren: () => import('./pets/pets.module').then((module) => module.PetsModule),
-    title: 'your pets'
+    path: "pets",
+    loadChildren: () =>
+      import("./pets/pets.module").then((module) => module.PetsModule),
+    title: "your pets",
   },
   {
-    path: '',
-    pathMatch: 'full',
+    path: "",
+    pathMatch: "full",
     component: LandingPageContainerComponent,
-    title: 'raisin\' pets'
+    title: "raisin' pets",
   },
   {
-    path: '**',
+    path: "**",
     component: LandingPageContainerComponent,
   },
 ];
 
 @NgModule({
   imports: [NativeScriptRouterModule.forRoot(routes)],
-  exports: [NativeScriptRouterModule]
+  exports: [NativeScriptRouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

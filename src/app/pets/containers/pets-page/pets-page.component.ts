@@ -1,14 +1,14 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {AuthFacades} from "../../../facades/auth.facades";
-import {User} from "../../../models/user.model";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { AuthFacades } from "../../../facades/auth.facades";
+import { User } from "../../../models/user.model";
 
 @UntilDestroy()
 @Component({
-  selector: 'app-pets-page',
-  templateUrl: './pets-page.component.html',
-  styleUrls: ['./pets-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-pets-page",
+  templateUrl: "./pets-page.component.html",
+  styleUrls: ["./pets-page.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PetsPageComponent {
   user: User;

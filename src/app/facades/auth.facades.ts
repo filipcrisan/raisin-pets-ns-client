@@ -1,29 +1,28 @@
-import {Injectable} from "@angular/core";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {HttpErrorResponse} from "@angular/common/http";
-import {AuthService} from "../services/auth.service";
-import {GoogleSignin, User} from "@nativescript/google-signin/index.ios";
-import {RouterExtensions} from "@nativescript/angular";
-import * as appSettings from '@nativescript/core/application-settings';
-import {JwtHelperService} from "nativescript-angular-jwt";
-import {Store} from "@ngrx/store";
-import {authQuery} from "~/app/reducers/auth.selector";
-import {AuthActions} from "~/app/actions";
+import { Injectable } from "@angular/core";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { HttpErrorResponse } from "@angular/common/http";
+import { AuthService } from "../services/auth.service";
+import { GoogleSignin, User } from "@nativescript/google-signin/index.ios";
+import { RouterExtensions } from "@nativescript/angular";
+import * as appSettings from "@nativescript/core/application-settings";
+import { JwtHelperService } from "nativescript-angular-jwt";
+import { Store } from "@ngrx/store";
+import { authQuery } from "~/app/reducers/auth.selector";
+import { AuthActions } from "~/app/actions";
 
 @UntilDestroy()
 @Injectable()
 export class AuthFacades {
   query = {
     user$: this.store.select(authQuery.getUser),
-    loaded$: this.store.select(authQuery.getLoaded)
+    loaded$: this.store.select(authQuery.getLoaded),
   };
 
   constructor(
     private store: Store,
     private authService: AuthService,
-    private routerExtensions: RouterExtensions,
-  ) {
-  }
+    private routerExtensions: RouterExtensions
+  ) {}
 
   login(): void {
     GoogleSignin.signIn()
@@ -57,15 +56,16 @@ export class AuthFacades {
 
     const token = this.getBearerToken();
 
-    this.authService.login(token)
+    this.authService
+      .login(token)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (user) => {
-          this.store.dispatch(AuthActions.loadUserSuccess({user}));
+          this.store.dispatch(AuthActions.loadUserSuccess({ user }));
         },
         error: (error: HttpErrorResponse) => {
-          this.store.dispatch(AuthActions.loadUserFailure({error}));
-        }
+          this.store.dispatch(AuthActions.loadUserFailure({ error }));
+        },
       });
   }
 
@@ -76,7 +76,7 @@ export class AuthFacades {
   }
 
   getBearerToken(): string {
-    return appSettings.getString('token');
+    return appSettings.getString("token");
   }
 
   isTokenExpired(token: string): boolean {
@@ -87,47 +87,50 @@ export class AuthFacades {
   //#region Private methods
 
   private onGoogleSignIn(token: string): void {
-    this.authService.login(token)
+    this.authService
+      .login(token)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (user) => {
-          appSettings.setString('token', token);
-          this.store.dispatch(AuthActions.loadUserSuccess({user}));
-          this.routerExtensions.navigate(['pets']).then();
+          appSettings.setString("token", token);
+          this.store.dispatch(AuthActions.loadUserSuccess({ user }));
+          this.routerExtensions.navigate(["pets"]).then();
         },
         error: (error: HttpErrorResponse) => {
-          this.store.dispatch(AuthActions.loadUserFailure({error}));
-        }
+          this.store.dispatch(AuthActions.loadUserFailure({ error }));
+        },
       });
   }
 
   private onGoogleSignOut(): void {
-    this.authService.logout()
+    this.authService
+      .logout()
       .pipe(untilDestroyed(this))
       .subscribe({
         next: () => {
-          appSettings.remove('token');
-          this.routerExtensions.navigate(['']).then();
+          appSettings.remove("token");
+          this.routerExtensions.navigate([""]).then();
         },
         error: (error: HttpErrorResponse) => {
           console.log(error);
-        }
+        },
       });
   }
 
   private onGoogleSignInOfLoggedInUser(token: string): void {
     GoogleSignin.signOut()
       .then(() => {
-        this.authService.logout()
+        this.authService
+          .logout()
           .pipe(untilDestroyed(this))
           .subscribe({
             next: () => {
-              appSettings.remove('token');
+              appSettings.remove("token");
               this.onGoogleSignIn(token);
             },
             error: (error: HttpErrorResponse) => {
               console.log(error);
-            }
+            },
           });
       })
       .catch((error) => {
