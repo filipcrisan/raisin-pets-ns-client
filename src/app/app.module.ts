@@ -16,6 +16,7 @@ import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "~/environments/environment";
 import { metaReducers, ROOT_REDUCERS } from "~/app/reducers";
+import { AuthGuard } from "~/app/guards/auth.guard";
 
 export function initializeApp(appInitializerService: AppInitializerService) {
   return () => appInitializerService.init();
@@ -58,6 +59,7 @@ const SERVICES = [AppInitializerService, AuthService];
       useClass: AuthInterceptorService,
       multi: true,
     },
+    AuthGuard,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],

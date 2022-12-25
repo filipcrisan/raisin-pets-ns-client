@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { PetsPageComponent } from "./containers/pets-page/pets-page.component";
 import { NativeScriptRouterModule } from "@nativescript/angular";
+import { AuthGuard } from "../guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -12,8 +13,7 @@ const routes: Routes = [
   {
     path: "list",
     component: PetsPageComponent,
-    // TODO:
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 ];
 
