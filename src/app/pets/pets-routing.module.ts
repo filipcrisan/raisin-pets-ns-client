@@ -1,0 +1,24 @@
+import { Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { PetsPageComponent } from "./containers/pets-page/pets-page.component";
+import { NativeScriptRouterModule } from "@nativescript/angular";
+import { AuthGuard } from "../guards/auth.guard";
+
+const routes: Routes = [
+  {
+    path: "",
+    redirectTo: "list",
+    pathMatch: "full",
+  },
+  {
+    path: "list",
+    component: PetsPageComponent,
+    canActivate: [AuthGuard],
+  },
+];
+
+@NgModule({
+  imports: [NativeScriptRouterModule.forChild(routes)],
+  exports: [NativeScriptRouterModule],
+})
+export class PetsRoutingModule {}
