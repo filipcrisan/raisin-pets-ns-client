@@ -2,6 +2,7 @@ import { APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import {
   NativeScriptHttpClientModule,
   NativeScriptModule,
+  registerElement,
 } from "@nativescript/angular";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -17,6 +18,13 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "~/environments/environment";
 import { metaReducers, ROOT_REDUCERS } from "~/app/reducers";
 import { AuthGuard } from "~/app/guards/auth.guard";
+import { Gif } from "nativescript-gif";
+
+//#region Register elements
+
+registerElement("Gif", () => Gif);
+
+//#endregion
 
 export function initializeApp(appInitializerService: AppInitializerService) {
   return () => appInitializerService.init();
