@@ -1,4 +1,8 @@
 <StackLayout>
-    <Button text="Logout" (tap)="logout()"></Button>
-    <TextView>{{user.firstName}}</TextView>>
+    <Label textWrap="true" class="text-center">
+        <FormattedString>
+            <Span text="raisin' pets\n" class="font-mono text-2xl"></Span>
+        </FormattedString>
+    </Label>
+    <router-outlet></router-outlet>
 </StackLayout>
