@@ -1,5 +1,5 @@
 import * as fromPets from "./pets.reducer";
-import { Action, combineReducers } from "@ngrx/store";
+import { Action, combineReducers, createFeatureSelector } from "@ngrx/store";
 
 export const featureKey = "pets";
 
@@ -15,3 +15,5 @@ export function reducers(
     [fromPets.featureKey]: fromPets.reducer,
   })(state, action);
 }
+
+export const getFeatureState = createFeatureSelector<State>(featureKey);

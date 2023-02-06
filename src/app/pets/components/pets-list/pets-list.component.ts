@@ -5,9 +5,9 @@ import { Pet } from "../../models/pet.model";
   selector: "app-pets-list",
   templateUrl: "./pets-list.component.html",
   styleUrls: ["./pets-list.component.scss"],
-  inputs: ["pets"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PetsListComponent {
   @Input() pets: Pet[];
+  @Input() loading: boolean;
 }

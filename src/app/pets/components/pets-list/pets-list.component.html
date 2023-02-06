@@ -1,5 +1,9 @@
-<Label textWrap="true" class="text-center">
-    <FormattedString>
-        <Span class="font-mono text-2xl">{{pets | json}}</Span>
-    </FormattedString>
-</Label>
+<ListView [hidden]="loading" [items]="pets">
+    <ng-template let-item="item" let-odd="odd" let-even="even">
+        <Label [hidden]="loading" textWrap="true" class="text-center">
+            <FormattedString>
+                <Span [text]="item.name"  class="font-mono text-2xl"></Span>
+            </FormattedString>
+        </Label>
+    </ng-template>
+</ListView>

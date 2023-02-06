@@ -1,10 +1,10 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import {
-  featureKey as petsFeatureKey,
-  State as PetsState,
-} from "./pets.reducer";
+import { createSelector } from "@ngrx/store";
+import { getFeatureState } from "./index";
 
-export const getPetsState = createFeatureSelector<PetsState>(petsFeatureKey);
+export const getPetsState = createSelector(
+  getFeatureState,
+  (state) => state.pets
+);
 
 const getPets = createSelector(getPetsState, (state) => state.pets.entities);
 

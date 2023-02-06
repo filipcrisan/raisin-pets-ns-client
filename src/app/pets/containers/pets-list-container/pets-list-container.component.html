@@ -1,18 +1,4 @@
-<!--<app-pets-list-->
-<!--    [pets]="petsQuery.entities$ | async"-->
-<!--&gt;</app-pets-list>-->
-
-<!--<ListView [items]="pets" class="list-group">-->
-<!--    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">-->
-<!--        &lt;!&ndash; The item template can only have a single root view container (e.g. GridLayout, StackLayout, etc.)&ndash;&gt;-->
-<!--        <GridLayout>-->
-<!--            <Label [text]="item.name" class="list-group-item"></Label>-->
-<!--        </GridLayout>-->
-<!--    </ng-template>-->
-<!--</ListView>-->
-
-<Label textWrap="true" class="text-center">
-    <FormattedString>
-        <Span class="font-mono text-2xl">{{pets | json}}</Span>
-    </FormattedString>
-</Label>
+<app-pets-list
+    [pets]="petsQuery.entities$ | async"
+    [loading]="petsQuery.loading$ | async"
+></app-pets-list>
