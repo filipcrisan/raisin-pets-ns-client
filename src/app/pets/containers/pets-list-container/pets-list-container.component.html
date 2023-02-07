@@ -1,4 +1,5 @@
 <app-pets-list
     [pets]="petsQuery.entities$ | async"
     [loading]="petsQuery.loading$ | async"
+    [error]="petsQuery.error$ | async"
 ></app-pets-list>
