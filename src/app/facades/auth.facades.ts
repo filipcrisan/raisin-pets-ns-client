@@ -63,6 +63,7 @@ export class AuthFacades {
       .subscribe({
         next: (user) => {
           this.store.dispatch(AuthActions.loadUserSuccess({ user }));
+          this.routerExtensions.navigate(["pets"]).then();
         },
         error: (error: HttpErrorResponse) => {
           this.store.dispatch(AuthActions.loadUserFailure({ error }));
