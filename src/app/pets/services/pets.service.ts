@@ -13,4 +13,8 @@ export class PetsService {
   getAllPets(): Observable<Pet[]> {
     return this.http.get<Pet[]>(`${this.apiUrl}/list`);
   }
+
+  addPet(pet: Pet): Observable<Pet> {
+    return this.http.post<Pet>(this.apiUrl, pet);
+  }
 }

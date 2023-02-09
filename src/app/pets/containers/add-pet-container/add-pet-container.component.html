@@ -1,5 +1,5 @@
-<Label textWrap="true" class="text-center">
-    <FormattedString>
-        <Span text="show your pets that you care\n" class="font-mono text-2xl"></Span>
-    </FormattedString>
-</Label>
+<app-add-pet
+    [saving]="petsQuery.pets.saving$ | async"
+    [error]="petsQuery.pets.error$ | async"
+    (addPet)="onAddPet($event)"
+></app-add-pet>

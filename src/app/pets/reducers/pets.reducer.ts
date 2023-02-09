@@ -9,6 +9,7 @@ export interface State {
   pets: {
     entities: Pet[];
     loading: boolean;
+    saving: boolean;
     error: HttpErrorResponse;
   };
 }
@@ -17,6 +18,7 @@ export const initialState: State = {
   pets: {
     entities: [],
     loading: false,
+    saving: false,
     error: null,
   },
 };
@@ -45,6 +47,31 @@ export const reducer = createReducer(
     pets: {
       ...state.pets,
       loading: false,
+      error: error,
+    },
+  })),
+  on(PetsPageActions.addPet, (state) => ({
+    ...state,
+    pets: {
+      ...state.pets,
+      saving: true,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.addPetSuccess, (state, { pet }) => ({
+    ...state,
+    pets: {
+      ...state.pets,
+      entities: [...state.pets.entities, pet],
+      saving: false,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.addPetFailure, (state, { error }) => ({
+    ...state,
+    pets: {
+      ...state.pets,
+      saving: false,
       error: error,
     },
   }))

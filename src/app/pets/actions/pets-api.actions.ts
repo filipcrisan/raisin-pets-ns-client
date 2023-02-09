@@ -11,3 +11,13 @@ export const getAllPetsFailure = createAction(
   "[Pets/API] Get all pets Failure",
   props<{ error: HttpErrorResponse }>()
 );
+
+export const addPetSuccess = createAction(
+  "[Pets/API] Add pet Success",
+  props<{ pet: Pet }>()
+);
+
+export const addPetFailure = createAction(
+  "[Pets/API] Add pet Failure",
+  props<{ error: HttpErrorResponse }>()
+);
