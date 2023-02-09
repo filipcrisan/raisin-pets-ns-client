@@ -8,12 +8,14 @@ import { featureKey, reducers } from "./reducers";
 import { PetsListComponent } from "./components/pets-list/pets-list.component";
 import { PetsFacades } from "./facades/pets.facades";
 import { PetsService } from "./services/pets.service";
+import { AddPetContainerComponent } from "./containers/add-pet-container/add-pet-container.component";
 
 @NgModule({
   declarations: [
     PetsPageComponent,
     PetsListContainerComponent,
     PetsListComponent,
+    AddPetContainerComponent,
   ],
   imports: [
     NativeScriptCommonModule,

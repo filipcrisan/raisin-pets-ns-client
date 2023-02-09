@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { PetsFacades } from "../../facades/pets.facades";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { RouterExtensions } from "@nativescript/angular";
+import { ActivatedRoute } from "@angular/router";
 
 @UntilDestroy()
 @Component({
@@ -12,9 +14,19 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 export class PetsListContainerComponent implements OnInit {
   petsQuery = this.petsFacades.query.pets;
 
-  constructor(private petsFacades: PetsFacades) {}
+  constructor(
+    private petsFacades: PetsFacades,
+    private activatedRoute: ActivatedRoute,
+    private routerExtensions: RouterExtensions
+  ) {}
 
   ngOnInit(): void {
     this.petsFacades.getAllPets().pipe(untilDestroyed(this)).subscribe();
+  }
+
+  onAddPet(): void {
+    this.routerExtensions
+      .navigate(["add"], { relativeTo: this.activatedRoute.parent })
+      .then();
   }
 }

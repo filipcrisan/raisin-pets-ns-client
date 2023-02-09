@@ -4,6 +4,7 @@ import { PetsPageComponent } from "./containers/pets-page/pets-page.component";
 import { NativeScriptRouterModule } from "@nativescript/angular";
 import { AuthGuard } from "../guards/auth.guard";
 import { PetsListContainerComponent } from "./containers/pets-list-container/pets-list-container.component";
+import { AddPetContainerComponent } from "./containers/add-pet-container/add-pet-container.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: "list",
         component: PetsListContainerComponent,
+      },
+      {
+        path: "add",
+        component: AddPetContainerComponent,
       },
     ],
   },
