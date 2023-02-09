@@ -15,7 +15,8 @@ import { AuthActions } from "~/app/actions";
 export class AuthFacades {
   query = {
     user$: this.store.select(authQuery.getUser),
-    loaded$: this.store.select(authQuery.getLoaded),
+    userLoading$: this.store.select(authQuery.getUserLoading),
+    userError$: this.store.select(authQuery.getUserError),
   };
 
   constructor(
@@ -87,6 +88,8 @@ export class AuthFacades {
   //#region Private methods
 
   private onGoogleSignIn(token: string): void {
+    this.store.dispatch(AuthActions.loadUser());
+
     this.authService
       .login(token)
       .pipe(untilDestroyed(this))

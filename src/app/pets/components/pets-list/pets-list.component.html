@@ -1,12 +1,16 @@
-<ListView [hidden]="loading || error" [items]="pets" class="h-full">
-    <ng-template let-item="item" let-odd="odd" let-even="even">
-        <GridLayout columns="80, auto" rows="auto, auto">
-            <Image [src]="getAvatarUrlOrDefault(item)" class="w-20 h-20 mt-5 mb-10" row="0" col="0"></Image>
-            <Label textWrap="true" class="text-center" row="0" col="1">
-                <FormattedString>
-                    <Span [text]="item.name"  class="font-mono text-2xl"></Span>
-                </FormattedString>
-            </Label>
-        </GridLayout>
-    </ng-template>
-</ListView>
+<StackLayout>
+    <ListView [hidden]="loading || error" [items]="pets" class="h-full">
+        <ng-template let-item="item" let-odd="odd" let-even="even">
+            <GridLayout columns="80, auto" rows="auto, auto">
+                <Image [src]="getAvatarUrlOrDefault(item)" class="w-20 h-20 mt-5 mb-10" row="0" col="0"></Image>
+                <Label textWrap="true" class="text-left" row="0" col="1">
+                    <FormattedString>
+                        <Span [text]="item | json"  class="font-mono"></Span>
+                    </FormattedString>
+                </Label>
+            </GridLayout>
+        </ng-template>
+    </ListView>
+
+    <ActivityIndicator [busy]="loading && !error"></ActivityIndicator>
+</StackLayout>

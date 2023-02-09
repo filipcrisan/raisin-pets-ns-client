@@ -19,6 +19,7 @@ import { environment } from "~/environments/environment";
 import { metaReducers, ROOT_REDUCERS } from "~/app/reducers";
 import { AuthGuard } from "~/app/guards/auth.guard";
 import { Gif } from "nativescript-gif";
+import { LandingPageComponent } from "~/app/components/landing-page/landing-page.component";
 
 //#region Register elements
 
@@ -35,7 +36,11 @@ const FACADES = [AuthFacades];
 const SERVICES = [AppInitializerService, AuthService];
 
 @NgModule({
-  declarations: [AppComponent, LandingPageContainerComponent],
+  declarations: [
+    AppComponent,
+    LandingPageContainerComponent,
+    LandingPageComponent,
+  ],
   imports: [
     NativeScriptModule,
     AppRoutingModule,

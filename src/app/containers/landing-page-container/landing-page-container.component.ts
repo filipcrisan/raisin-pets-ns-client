@@ -8,9 +8,11 @@ import { AuthFacades } from "~/app/facades/auth.facades";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPageContainerComponent {
+  userQuery = this.authFacades.query;
+
   constructor(private authFacades: AuthFacades) {}
 
-  signInWithGoogle(): void {
+  onSignInWithGoogle(): void {
     this.authFacades.login();
   }
 }

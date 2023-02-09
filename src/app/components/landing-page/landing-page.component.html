@@ -1,0 +1,25 @@
+<StackLayout>
+    <StackLayout [hidden]="userLoading || userError" class="flex flex-col bg-landing-page-yellow w-full h-full overflow-auto">
+        <StackLayout class="flex justify-center">
+            <Image src="~/assets/images/logo-raisin-purple.png" class="w-20 h-20 mt-5 mb-10"></Image>
+        </StackLayout>
+        <StackLayout class="flex flex-col justify-items-center items-center">
+            <Label textWrap="true" class="text-center">
+                <FormattedString>
+                    <Span text="show your pets that you care\n" class="font-mono text-2xl"></Span>
+                    <Span text="\n"></Span>
+                    <Span text="\n"></Span>
+                    <Span text="to get started," class="font-mono text-xl"></Span>
+                </FormattedString>
+            </Label>
+            <StackLayout orientation="horizontal" (tap)="onSignInWithGoogle()" class="rounded-full border-solid border-2 border-black mt-2 w-2/6 h-11">
+                <Label text="Sign in with" verticalAlignment="center" class="font-mono ml-3 mr-2"></Label>
+                <Image src="~/assets/icons/google-logo.png"  class="w-9 h-9 mr-3"></Image>
+            </StackLayout>
+
+            <Gif src="~/assets/images/landing-page.gif"></Gif>
+        </StackLayout>
+    </StackLayout>
+
+    <ActivityIndicator [busy]="userLoading && !userError"></ActivityIndicator>
+</StackLayout>
