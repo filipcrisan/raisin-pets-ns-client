@@ -57,6 +57,8 @@ export class AuthFacades {
 
     const token = this.getBearerToken();
 
+    this.store.dispatch(AuthActions.loadUser());
+
     this.authService
       .login(token)
       .pipe(untilDestroyed(this))
