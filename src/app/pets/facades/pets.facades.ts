@@ -53,4 +53,21 @@ export class PetsFacades {
       })
     );
   }
+
+  editPet(pet: Pet): Observable<Pet> {
+    this.store.dispatch(PetsPageActions.editPet());
+
+    return this.petsService.editPet(pet).pipe(
+      tap({
+        next: (pet) => {
+          this.store.dispatch(PetsApiActions.editPetSuccess({ pet }));
+        },
+        error: (error: HttpErrorResponse) => {
+          // TODO: add toast notification service
+
+          this.store.dispatch(PetsApiActions.editPetFailure({ error }));
+        },
+      })
+    );
+  }
 }

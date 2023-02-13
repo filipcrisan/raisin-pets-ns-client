@@ -1,0 +1,6 @@
+<app-edit-pet
+  [pet]="pet$ | async"
+  [saving]="petsQuery.pets.saving$ | async"
+  [error]="petsQuery.pets.error$ | async"
+  (editPet)="onEditPet($event)"
+></app-edit-pet>

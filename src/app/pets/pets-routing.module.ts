@@ -6,6 +6,7 @@ import { AuthGuard } from "../guards/auth.guard";
 import { PetsListContainerComponent } from "./containers/pets-list-container/pets-list-container.component";
 import { AddPetContainerComponent } from "./containers/add-pet-container/add-pet-container.component";
 import { MenuContainerComponent } from "./containers/menu-container/menu-container.component";
+import { EditPetContainerComponent } from "./containers/edit-pet-container/edit-pet-container.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: "add",
         component: AddPetContainerComponent,
+      },
+      {
+        path: "edit/:id",
+        component: EditPetContainerComponent,
       },
     ],
   },

@@ -16,6 +16,8 @@ import { AddPetComponent } from "./components/add-pet/add-pet.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DropDownModule } from "nativescript-drop-down/angular";
 import { MenuContainerComponent } from "./containers/menu-container/menu-container.component";
+import { EditPetComponent } from "./components/edit-pet/edit-pet.component";
+import { EditPetContainerComponent } from "./containers/edit-pet-container/edit-pet-container.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { MenuContainerComponent } from "./containers/menu-container/menu-contain
     AddPetContainerComponent,
     AddPetComponent,
     MenuContainerComponent,
+    EditPetComponent,
+    EditPetContainerComponent,
   ],
   imports: [
     ReactiveFormsModule,

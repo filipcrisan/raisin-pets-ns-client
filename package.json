@@ -23,6 +23,7 @@
     "nativescript-angular-jwt": "^1.0.9",
     "nativescript-drop-down": "^6.0.2",
     "nativescript-gif": "^5.0.0",
+    "nativescript-menu": "^1.1.7",
     "ngrx-store-freeze": "^0.2.4",
     "rxjs": "~7.5.0",
     "tailwindcss": "^3.2.4",

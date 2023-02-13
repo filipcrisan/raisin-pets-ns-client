@@ -17,4 +17,8 @@ export class PetsService {
   addPet(pet: Pet): Observable<Pet> {
     return this.http.post<Pet>(this.apiUrl, pet);
   }
+
+  editPet(pet: Pet): Observable<Pet> {
+    return this.http.put<Pet>(this.apiUrl, pet);
+  }
 }

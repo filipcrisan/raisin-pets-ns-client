@@ -4,7 +4,6 @@ import {
   NativeScriptModule,
   registerElement,
 } from "@nativescript/angular";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LandingPageContainerComponent } from "~/app/containers/landing-page-container/landing-page-container.component";
@@ -20,6 +19,7 @@ import { metaReducers, ROOT_REDUCERS } from "~/app/reducers";
 import { AuthGuard } from "~/app/guards/auth.guard";
 import { Gif } from "nativescript-gif";
 import { LandingPageComponent } from "~/app/components/landing-page/landing-page.component";
+import { SharedModule } from "~/app/shared/shared.module";
 
 //#region Register elements
 
@@ -57,6 +57,7 @@ const SERVICES = [AppInitializerService, AuthService];
       maxAge: 25,
       logOnly: environment.production,
     }),
+    SharedModule.forRoot(),
   ],
   providers: [
     FACADES,

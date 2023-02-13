@@ -3,26 +3,29 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
 } from "@angular/core";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Pet } from "../../models/pet.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Species } from "../../models/species.model";
 import { Size } from "../../models/size.model";
-import { Pet } from "../../models/pet.model";
 import { SelectedIndexChangedEventData } from "nativescript-drop-down";
-import { HttpErrorResponse } from "@angular/common/http";
+import { NgChanges } from "../../../shared/models/simple-changes-typed";
 
 @Component({
-  selector: "app-add-pet",
-  templateUrl: "./add-pet.component.html",
-  styleUrls: ["./add-pet.component.scss"],
+  selector: "app-edit-pet",
+  templateUrl: "./edit-pet.component.html",
+  styleUrls: ["./edit-pet.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddPetComponent {
+export class EditPetComponent implements OnChanges {
+  @Input() pet: Pet;
   @Input() saving: boolean;
   @Input() error: HttpErrorResponse;
 
-  @Output() addPet = new EventEmitter<Pet>();
+  @Output() editPet = new EventEmitter<Pet>();
 
   petForm = new FormGroup({
     name: new FormControl("", Validators.required),
@@ -37,6 +40,14 @@ export class AddPetComponent {
   sizes = ["Small", "Medium", "Large"];
   selectedSizeIndex = 1;
 
+  ngOnChanges(changes: NgChanges<EditPetComponent>): void {
+    if (changes.pet?.currentValue) {
+      this.petForm.patchValue(this.pet);
+      this.selectedSpeciesIndex = this.pet.species - 1;
+      this.selectedSizeIndex = this.pet.size - 1;
+    }
+  }
+
   onSpeciesChange(args: SelectedIndexChangedEventData) {
     this.petForm.controls.species.setValue(args.newIndex + 1);
   }
@@ -50,7 +61,7 @@ export class AddPetComponent {
       return;
     }
 
-    this.addPet.emit(this.formValue);
+    this.editPet.emit({ ...this.formValue, id: this.pet.id });
   }
 
   get formValue(): Pet {

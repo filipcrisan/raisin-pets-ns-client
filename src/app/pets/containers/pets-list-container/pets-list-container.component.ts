@@ -27,4 +27,8 @@ export class PetsListContainerComponent implements OnInit {
   onAddPet(): void {
     this.routerExtensions.navigate(["pets/dashboard/add"]).then();
   }
+
+  onEditDetails(id: number): void {
+    this.routerExtensions.navigate([`pets/dashboard/edit/${id}`]).then();
+  }
 }
