@@ -9,5 +9,6 @@
         [loading]="petsQuery.loading$ | async"
         [error]="petsQuery.error$ | async"
         (editDetails)="onEditDetails($event)"
+        (delete)="onDelete($event)"
     ></app-pets-list>
 </StackLayout>

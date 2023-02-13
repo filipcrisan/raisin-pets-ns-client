@@ -3,6 +3,7 @@ import { PetsFacades } from "../../facades/pets.facades";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { RouterExtensions } from "@nativescript/angular";
 import { ActivatedRoute } from "@angular/router";
+import { Dialogs } from "@nativescript/core";
 
 @UntilDestroy()
 @Component({
@@ -30,5 +31,17 @@ export class PetsListContainerComponent implements OnInit {
 
   onEditDetails(id: number): void {
     this.routerExtensions.navigate([`pets/dashboard/edit/${id}`]).then();
+  }
+
+  onDelete(id: number): void {
+    Dialogs.action({
+      message: "Are you sure you want to delete this pet?",
+      cancelButtonText: "Cancel",
+      actions: ["Delete"],
+    }).then((result) => {
+      if (result === "Delete") {
+        this.petsFacades.deletePet(id).pipe(untilDestroyed(this)).subscribe();
+      }
+    });
   }
 }

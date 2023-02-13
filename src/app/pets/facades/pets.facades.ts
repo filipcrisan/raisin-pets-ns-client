@@ -70,4 +70,19 @@ export class PetsFacades {
       })
     );
   }
+
+  deletePet(id: number): Observable<Pet> {
+    this.store.dispatch(PetsPageActions.deletePet());
+
+    return this.petsService.deletePet(id).pipe(
+      tap({
+        next: (pet) => {
+          this.store.dispatch(PetsApiActions.deletePetSuccess({ pet }));
+        },
+        error: (error: HttpErrorResponse) => {
+          // TODO: add toast notification service
+        },
+      })
+    );
+  }
 }

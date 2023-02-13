@@ -21,4 +21,8 @@ export class PetsService {
   editPet(pet: Pet): Observable<Pet> {
     return this.http.put<Pet>(this.apiUrl, pet);
   }
+
+  deletePet(id: number): Observable<Pet> {
+    return this.http.delete<Pet>(`${this.apiUrl}/${id}`);
+  }
 }
