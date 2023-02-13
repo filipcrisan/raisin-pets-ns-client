@@ -1,0 +1,17 @@
+<StackLayout class="bg-landing-page-yellow pt-2.5 h-full w-full">
+  <DockLayout stretchLastChild="true" class="pb-2.5">
+    <Image (tap)="onClose()" src="~/assets/icons/cancel.png" class="w-9 h-9 mr-3"></Image>
+    <Image src="~/assets/images/logo-raisin-purple.png" class="w-10 h-10" dock="left"></Image>
+  </DockLayout>
+  <FlexboxLayout flexDirection="column" justifyContent="space-between" alignItems="center" class="h-full">
+    <Label textWrap="true" class="text-center" [hidden]="(authQuery.userLoading$ | async) || (authQuery.userError$ | async) !== null">
+      <FormattedString>
+        <Span [text]="'You are currently logged in as ' + (authQuery.user$ | async).firstName + '.'" class="font-mono text-xl"></Span>
+      </FormattedString>
+    </Label>
+    <StackLayout orientation="horizontal" (tap)="onLogout()" class="rounded-full border-solid border-2 border-black mt-2 w-32 h-11">
+      <Image src="~/assets/icons/save.png"  class="w-9 h-9 mr-2 ml-3"></Image>
+      <Label text="Logout" verticalAlignment="center" class="font-mono mr-3"></Label>
+    </StackLayout>
+  </FlexboxLayout>
+</StackLayout>

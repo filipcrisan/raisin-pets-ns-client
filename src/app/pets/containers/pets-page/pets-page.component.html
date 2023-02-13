@@ -1,9 +1,8 @@
-<StackLayout class="bg-landing-page-yellow">
-    <Label textWrap="true" class="text-center">
-        <FormattedString>
-            <Span text="raisin' pets\n" class="font-mono text-2xl"></Span>
-        </FormattedString>
-    </Label>
+<StackLayout class="bg-landing-page-yellow pt-2.5">
+    <DockLayout stretchLastChild="true">
+        <Image (tap)="onNavigateToMenu()" src="~/assets/icons/menu.png" class="w-9 h-9 mr-3"></Image>
+        <Image src="~/assets/images/logo-raisin-purple.png" class="w-10 h-10" dock="left"></Image>
+    </DockLayout>
     <StackLayout>
         <page-router-outlet actionBarVisibility="never"></page-router-outlet>
     </StackLayout>

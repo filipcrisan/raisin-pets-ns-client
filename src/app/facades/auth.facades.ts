@@ -115,7 +115,7 @@ export class AuthFacades {
       .subscribe({
         next: () => {
           appSettings.remove("token");
-          this.routerExtensions.navigate([""]).then();
+          this.routerExtensions.navigate([""], { clearHistory: true }).then();
         },
         error: (error: HttpErrorResponse) => {
           console.log(error);

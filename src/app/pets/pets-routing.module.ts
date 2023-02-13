@@ -5,6 +5,7 @@ import { NativeScriptRouterModule } from "@nativescript/angular";
 import { AuthGuard } from "../guards/auth.guard";
 import { PetsListContainerComponent } from "./containers/pets-list-container/pets-list-container.component";
 import { AddPetContainerComponent } from "./containers/add-pet-container/add-pet-container.component";
+import { MenuContainerComponent } from "./containers/menu-container/menu-container.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
         component: AddPetContainerComponent,
       },
     ],
+  },
+  {
+    path: "menu",
+    component: MenuContainerComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

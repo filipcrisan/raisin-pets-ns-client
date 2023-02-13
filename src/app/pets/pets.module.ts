@@ -15,6 +15,7 @@ import { AddPetContainerComponent } from "./containers/add-pet-container/add-pet
 import { AddPetComponent } from "./components/add-pet/add-pet.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DropDownModule } from "nativescript-drop-down/angular";
+import { MenuContainerComponent } from "./containers/menu-container/menu-container.component";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DropDownModule } from "nativescript-drop-down/angular";
     PetsListComponent,
     AddPetContainerComponent,
     AddPetComponent,
+    MenuContainerComponent,
   ],
   imports: [
     ReactiveFormsModule,
