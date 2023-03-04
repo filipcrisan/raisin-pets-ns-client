@@ -11,7 +11,7 @@
             <TextField formControlName="name" class="font-mono fields"></TextField>
             <Label *ngIf="petForm.touched && petForm.controls.name.errors" text="Name is required" class="font-mono text-center text-red-800"></Label>
             <Label text="Avatar URL" class="font-mono fields"></Label>
-            <TextField formControlName="avatarUrl" class="font-mono fields"></TextField>
+            <TextField formControlName="avatarInBase64" class="font-mono fields"></TextField>
             <Label text="Date of birth (approx.)" class="font-mono fields"></Label>
             <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
                 <DatePicker formControlName="dateOfBirth"></DatePicker>

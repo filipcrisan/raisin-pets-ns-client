@@ -26,7 +26,7 @@ export class AddPetComponent {
 
   petForm = new FormGroup({
     name: new FormControl("", Validators.required),
-    avatarUrl: new FormControl(""),
+    avatarInBase64: new FormControl(""),
     species: new FormControl(Species.Dog),
     size: new FormControl(Size.Medium),
     dateOfBirth: new FormControl<Date>(new Date(Date.now())),
