@@ -3,7 +3,8 @@ import { PetsFacades } from "../../facades/pets.facades";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Pet } from "../../models/pet.model";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { map, tap } from "rxjs";
+import { BehaviorSubject, filter, map, tap } from "rxjs";
+import { CameraService } from "../../../shared/services/camera.service";
 
 @UntilDestroy()
 @Component({
@@ -19,13 +20,24 @@ export class EditPetContainerComponent {
   pet$ = this.petsQuery.pets.entities$.pipe(
     map((x) => x.find((y) => y.id === this.petId))
   );
+  avatarInBase64$ = new BehaviorSubject<string>(null);
 
   constructor(
     private petsFacades: PetsFacades,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cameraService: CameraService
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+
+    this.pet$
+      .pipe(
+        untilDestroyed(this),
+        filter((x) => !!x)
+      )
+      .subscribe((pet) => {
+        this.avatarInBase64$.next(pet.avatarInBase64);
+      });
   }
 
   onEditPet(pet: Pet): void {
@@ -44,5 +56,13 @@ export class EditPetContainerComponent {
         })
       )
       .subscribe();
+  }
+
+  async onTakePicture(): Promise<void> {
+    const image = await this.cameraService.takePicture();
+
+    this.avatarInBase64$.next(
+      this.cameraService.getImageUrl(image.toBase64String("jpg", 90))
+    );
   }
 }

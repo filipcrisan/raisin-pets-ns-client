@@ -22,10 +22,12 @@ import { NgChanges } from "../../../shared/models/simple-changes-typed";
 })
 export class EditPetComponent implements OnChanges {
   @Input() pet: Pet;
+  @Input() avatarInBase64: string;
   @Input() saving: boolean;
   @Input() error: HttpErrorResponse;
 
   @Output() editPet = new EventEmitter<Pet>();
+  @Output() takePicture = new EventEmitter<void>();
 
   petForm = new FormGroup({
     name: new FormControl("", Validators.required),
@@ -46,6 +48,10 @@ export class EditPetComponent implements OnChanges {
       this.selectedSpeciesIndex = this.pet.species - 1;
       this.selectedSizeIndex = this.pet.size - 1;
     }
+
+    if (changes.avatarInBase64?.currentValue) {
+      this.petForm.controls.avatarInBase64.setValue(this.avatarInBase64);
+    }
   }
 
   onSpeciesChange(args: SelectedIndexChangedEventData) {
@@ -62,6 +68,10 @@ export class EditPetComponent implements OnChanges {
     }
 
     this.editPet.emit({ ...this.formValue, id: this.pet.id });
+  }
+
+  onChangeAvatar(): void {
+    this.takePicture.emit();
   }
 
   get formValue(): Pet {
