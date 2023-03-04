@@ -56,5 +56,18 @@
     	</dict>
     </array>
     <!-- End of the Google Sign-in Section -->
+    <key>NSCameraUsageDescription</key>
+    <string>raisin&apos; pets wants to use your camera</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>raisin&apos; pets wants to use your library additions</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>raisin&apos; pets wants to use your library</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoadsInWebContent</key>
+        <true/>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

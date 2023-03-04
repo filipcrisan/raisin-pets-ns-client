@@ -1,11 +1,5 @@
-<StackLayout class="bg-landing-page-yellow">
+<StackLayout class="bg-landing-page-yellow pt-20">
     <StackLayout [hidden]="saving">
-        <Label textWrap="true" class="text-center">
-            <FormattedString>
-                <Span text="pet details:\n" class="font-mono text-2xl"></Span>
-            </FormattedString>
-        </Label>
-
         <form [formGroup]="petForm">
             <Label text="Name" class="font-mono fields"></Label>
             <TextField formControlName="name" class="font-mono fields"></TextField>

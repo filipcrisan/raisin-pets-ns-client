@@ -1,5 +1,7 @@
 <app-add-pet
     [saving]="petsQuery.pets.saving$ | async"
     [error]="petsQuery.pets.error$ | async"
+    [avatarInBase64]="avatarInBase64$ | async"
     (addPet)="onAddPet($event)"
+    (takePicture)="onTakePicture()"
 ></app-add-pet>

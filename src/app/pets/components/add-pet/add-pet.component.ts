@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -11,6 +12,7 @@ import { Size } from "../../models/size.model";
 import { Pet } from "../../models/pet.model";
 import { SelectedIndexChangedEventData } from "nativescript-drop-down";
 import { HttpErrorResponse } from "@angular/common/http";
+import { NgChanges } from "../../../shared/models/simple-changes-typed";
 
 @Component({
   selector: "app-add-pet",
@@ -18,11 +20,13 @@ import { HttpErrorResponse } from "@angular/common/http";
   styleUrls: ["./add-pet.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddPetComponent {
+export class AddPetComponent implements OnChanges {
   @Input() saving: boolean;
   @Input() error: HttpErrorResponse;
+  @Input() avatarInBase64: string;
 
   @Output() addPet = new EventEmitter<Pet>();
+  @Output() takePicture = new EventEmitter<void>();
 
   petForm = new FormGroup({
     name: new FormControl("", Validators.required),
@@ -36,6 +40,12 @@ export class AddPetComponent {
   selectedSpeciesIndex = 0;
   sizes = ["Small", "Medium", "Large"];
   selectedSizeIndex = 1;
+
+  ngOnChanges(changes: NgChanges<AddPetComponent>): void {
+    if (changes.avatarInBase64?.currentValue) {
+      this.petForm.controls.avatarInBase64.setValue(this.avatarInBase64);
+    }
+  }
 
   onSpeciesChange(args: SelectedIndexChangedEventData) {
     this.petForm.controls.species.setValue(args.newIndex + 1);
@@ -51,6 +61,10 @@ export class AddPetComponent {
     }
 
     this.addPet.emit(this.formValue);
+  }
+
+  onCreateAvatar(): void {
+    this.takePicture.emit();
   }
 
   get formValue(): Pet {
