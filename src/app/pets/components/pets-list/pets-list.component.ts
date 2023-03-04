@@ -47,8 +47,8 @@ export class PetsListComponent {
   }
 
   getAvatarUrlOrDefault(pet: Pet): string {
-    if (pet.avatarUrl.length) {
-      return pet.avatarUrl;
+    if (pet.avatarInBase64.length) {
+      return pet.avatarInBase64;
     }
 
     if (pet.species == Species.Dog) {
