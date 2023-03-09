@@ -25,6 +25,7 @@ export class PetsListComponent {
 
   @Output() editDetails = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
+  @Output() selectPet = new EventEmitter<number>();
 
   constructor(private page: Page) {}
 
@@ -62,5 +63,9 @@ export class PetsListComponent {
     }
 
     return Const.DEFAULT_CAT_AVATAR_URL;
+  }
+
+  onSelectPet(id: number): void {
+    this.selectPet.emit(id);
   }
 }

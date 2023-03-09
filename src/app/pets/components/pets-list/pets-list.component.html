@@ -2,8 +2,8 @@
     <ListView [hidden]="loading || error" [items]="pets" class="h-full">
         <ng-template let-item="item">
             <DockLayout stretchLastChild="true">
-                <Image [src]="getAvatarUrlOrDefault(item)" class="w-20 h-20 mt-5 mb-10" dock="left"></Image>
-                <Label textWrap="true" class="text-left w-52" dock="left">
+                <Image [src]="getAvatarUrlOrDefault(item)" class="w-20 h-20 mt-5 mb-10" dock="left" (tap)="onSelectPet(item.id)"></Image>
+                <Label textWrap="true" class="text-left w-52" dock="left" (tap)="onSelectPet(item.id)">
                     <FormattedString>
                         <Span [text]="item.name"  class="font-mono"></Span>
                     </FormattedString>

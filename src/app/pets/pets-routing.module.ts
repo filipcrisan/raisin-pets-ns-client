@@ -7,6 +7,7 @@ import { PetsListContainerComponent } from "./containers/pets-list-container/pet
 import { AddPetContainerComponent } from "./containers/add-pet-container/add-pet-container.component";
 import { MenuContainerComponent } from "./containers/menu-container/menu-container.component";
 import { EditPetContainerComponent } from "./containers/edit-pet-container/edit-pet-container.component";
+import { TutorialsListContainerComponent } from "./containers/tutorials-list-container/tutorials-list-container.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: "edit/:id",
         component: EditPetContainerComponent,
+      },
+      {
+        path: "tutorials/:id",
+        component: TutorialsListContainerComponent,
       },
     ],
   },

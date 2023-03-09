@@ -2,6 +2,7 @@ import { createReducer, on } from "@ngrx/store";
 import { Pet } from "../models/pet.model";
 import { PetsApiActions, PetsPageActions } from "../actions";
 import { HttpErrorResponse } from "@angular/common/http";
+import { Tutorial } from "../models/tutorial.model";
 
 export const featureKey = "pets";
 
@@ -12,6 +13,11 @@ export interface State {
     saving: boolean;
     error: HttpErrorResponse;
   };
+  tutorials: {
+    entities: Tutorial[];
+    loading: boolean;
+    error: HttpErrorResponse;
+  };
 }
 
 export const initialState: State = {
@@ -19,6 +25,11 @@ export const initialState: State = {
     entities: [],
     loading: false,
     saving: false,
+    error: null,
+  },
+  tutorials: {
+    entities: [],
+    loading: false,
     error: null,
   },
 };
@@ -100,6 +111,35 @@ export const reducer = createReducer(
       entities: state.pets.entities.filter((x) => x.id !== pet.id),
       saving: false,
       error: null,
+    },
+  })),
+  on(PetsPageActions.getTutorialsByCategory, (state) => ({
+    ...state,
+    tutorials: {
+      ...state.tutorials,
+      loading: true,
+      error: null,
+    },
+  })),
+  on(PetsPageActions.clearTutorials, (state) => ({
+    ...state,
+    tutorials: initialState.tutorials,
+  })),
+  on(PetsApiActions.getTutorialsByCategorySuccess, (state, { tutorials }) => ({
+    ...state,
+    tutorials: {
+      ...state.tutorials,
+      entities: tutorials,
+      loading: false,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.getAllPetsFailure, (state, { error }) => ({
+    ...state,
+    tutorials: {
+      ...state.tutorials,
+      loading: false,
+      error: error,
     },
   }))
 );

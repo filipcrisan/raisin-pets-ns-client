@@ -1,0 +1,6 @@
+<app-tutorials-list
+  [tutorials]="tutorialsQuery.entities$ | async"
+  [loading]="tutorialsQuery.loading$ | async"
+  [error]="tutorialsQuery.error$ | async"
+  (getTutorials)="onGetTutorials($event)"
+></app-tutorials-list>

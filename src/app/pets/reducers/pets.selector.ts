@@ -20,9 +20,27 @@ const getPetsSaving = createSelector(
   (state) => state.pets.saving
 );
 
+const getTutorials = createSelector(
+  getPetsState,
+  (state) => state.tutorials.entities
+);
+
+const getTutorialsLoading = createSelector(
+  getPetsState,
+  (state) => state.tutorials.loading
+);
+
+const getTutorialsError = createSelector(
+  getPetsState,
+  (state) => state.tutorials.error
+);
+
 export const petsQuery = {
   getPets,
   getPetsLoading,
   getPetsError,
   getPetsSaving,
+  getTutorials,
+  getTutorialsLoading,
+  getTutorialsError,
 };

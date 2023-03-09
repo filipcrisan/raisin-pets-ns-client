@@ -1,0 +1,28 @@
+<StackLayout class="flex flex-col justify-center items-center bg-landing-page-yellow w-full h-full pt-20">
+  <Label text="Choose category" class="font-mono fields"></Label>
+  <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
+    <DropDown
+            [(ngModel)]="selectedCategoryIndex"
+            [items]="categoriesOptions"
+            (selectedIndexChanged)="onCategoryChange($event)"
+            class="font-mono fields m-2"
+    >
+    </DropDown>
+  </StackLayout>
+
+  <Label textWrap="true" text="These tutorials may be useful:" class="font-mono fields"></Label>
+  <Label [hidden]="loading || error || tutorials?.length !== 0" text="No tutorials to display." class="font-mono fields p-5"></Label>
+  <ListView [hidden]="loading || error" [items]="tutorials" class="h-full">
+    <ng-template let-item="item">
+      <DockLayout stretchLastChild="true" (tap)="onTapItem(item)">
+        <Label textWrap="true" class="text-left" dock="left" [text]="item.name"></Label>
+        <StackLayout>
+          <Label textWrap="true" class="text-left" text="{{Size[item.size]}} sized {{Species[item.species]}}"></Label>
+          <Label textWrap="true" class="text-left" text="{{item.minAgeInYears}}-{{item.maxAgeInYears}} years old"></Label>
+        </StackLayout>
+      </DockLayout>
+    </ng-template>
+  </ListView>
+
+  <ActivityIndicator [busy]="loading && !error"></ActivityIndicator>
+</StackLayout>

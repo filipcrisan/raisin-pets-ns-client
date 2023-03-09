@@ -44,4 +44,8 @@ export class PetsListContainerComponent implements OnInit {
       }
     });
   }
+
+  onSelectPet(id: number): void {
+    this.routerExtensions.navigate([`pets/dashboard/tutorials/${id}`]).then();
+  }
 }
