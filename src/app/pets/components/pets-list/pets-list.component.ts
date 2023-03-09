@@ -35,13 +35,19 @@ export class PetsListComponent {
         { id: "1", title: "Edit details" },
         { id: "2", title: "Delete" },
       ],
+      cancelButtonText: "Cancel",
     })
       .then((action) => {
+        if (action.id !== "1" && action.id !== "2") {
+          return;
+        }
+
         if (action.id == "1") {
           this.editDetails.emit(id);
-        } else {
-          this.delete.emit(id);
+          return;
         }
+
+        this.delete.emit(id);
       })
       .catch(console.log);
   }

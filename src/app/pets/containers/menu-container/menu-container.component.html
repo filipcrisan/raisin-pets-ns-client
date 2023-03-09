@@ -3,7 +3,7 @@
     <Image (tap)="onClose()" src="~/assets/icons/cancel.png" class="w-9 h-9 mr-3"></Image>
     <Image src="~/assets/images/logo-raisin-purple.png" class="w-10 h-10" dock="left"></Image>
   </DockLayout>
-  <FlexboxLayout flexDirection="column" justifyContent="space-between" alignItems="center" class="h-full">
+  <FlexboxLayout flexDirection="column" justifyContent="space-between" alignItems="center" class="h-full pb-5">
     <Label textWrap="true" class="text-center" [hidden]="(authQuery.userLoading$ | async) || (authQuery.userError$ | async) !== null">
       <FormattedString>
         <Span [text]="'You are currently logged in as ' + (authQuery.user$ | async).firstName + '.'" class="font-mono text-xl"></Span>
