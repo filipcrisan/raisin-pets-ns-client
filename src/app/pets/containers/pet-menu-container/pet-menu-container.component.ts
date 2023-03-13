@@ -23,4 +23,10 @@ export class PetMenuContainerComponent {
       .navigate([`pets/dashboard/tutorials/${this.petId}`])
       .then();
   }
+
+  onGoToExerciseTracking(): void {
+    this.routerExtensions
+      .navigate([`pets/dashboard/exercises/${this.petId}`])
+      .then();
+  }
 }

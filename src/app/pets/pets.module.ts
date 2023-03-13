@@ -21,6 +21,7 @@ import { EditPetContainerComponent } from "./containers/edit-pet-container/edit-
 import { TutorialsListContainerComponent } from "./containers/tutorials-list-container/tutorials-list-container.component";
 import { TutorialsListComponent } from "./components/tutorials-list/tutorials-list.component";
 import { PetMenuContainerComponent } from "./containers/pet-menu-container/pet-menu-container.component";
+import { ExercisesListContainerComponent } from "./containers/exercises-list-container/exercises-list-container.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PetMenuContainerComponent } from "./containers/pet-menu-container/pet-m
     TutorialsListContainerComponent,
     TutorialsListComponent,
     PetMenuContainerComponent,
+    ExercisesListContainerComponent,
   ],
   imports: [
     ReactiveFormsModule,

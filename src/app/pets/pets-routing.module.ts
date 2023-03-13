@@ -9,6 +9,7 @@ import { MenuContainerComponent } from "./containers/menu-container/menu-contain
 import { EditPetContainerComponent } from "./containers/edit-pet-container/edit-pet-container.component";
 import { TutorialsListContainerComponent } from "./containers/tutorials-list-container/tutorials-list-container.component";
 import { PetMenuContainerComponent } from "./containers/pet-menu-container/pet-menu-container.component";
+import { ExercisesListContainerComponent } from "./containers/exercises-list-container/exercises-list-container.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: "tutorials/:id",
         component: TutorialsListContainerComponent,
+      },
+      {
+        path: "exercises/:id",
+        component: ExercisesListContainerComponent,
       },
     ],
   },
