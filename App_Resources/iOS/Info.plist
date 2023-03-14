@@ -69,5 +69,15 @@
         <key>NSAllowsArbitraryLoads</key>
         <true/>
     </dict>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>location</string>
+    </array>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>raisin&apos; pets wants to use your device's location</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>raisin&apos; pets wants to use your device's location</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>App requires background tracking</string>
 </dict>
 </plist>

@@ -1,3 +1,8 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
-    <Label text="Exercise tracking" verticalAlignment="center" class="font-mono text-2xl mx-4"></Label>
+    <StackLayout orientation="horizontal" (tap)="onAddExercise()" class="rounded-full border-solid border-2 border-black mt-2 w-3/5 h-11">
+        <Image src="~/assets/icons/plus.png"  class="w-9 h-9 mr-2 ml-3"></Image>
+        <Label text="Add exercise session" verticalAlignment="center" class="font-mono mr-3"></Label>
+    </StackLayout>
+
+    <!-- TODO: add the list here -->
 </StackLayout>
