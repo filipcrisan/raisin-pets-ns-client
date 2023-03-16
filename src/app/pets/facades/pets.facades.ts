@@ -8,6 +8,7 @@ import { PetsApiActions, PetsPageActions } from "../actions";
 import { petsQuery } from "../reducers/pets.selector";
 import { TutorialCategory } from "../models/tutorial-category.model";
 import { Tutorial } from "../models/tutorial.model";
+import { TutorialsService } from "../services/tutorials.service";
 
 @Injectable()
 export class PetsFacades {
@@ -25,7 +26,11 @@ export class PetsFacades {
     },
   };
 
-  constructor(private store: Store, private petsService: PetsService) {}
+  constructor(
+    private store: Store,
+    private petsService: PetsService,
+    private tutorialsService: TutorialsService
+  ) {}
 
   getAllPets(): Observable<Pet[]> {
     this.store.dispatch(PetsPageActions.getAllPets());
@@ -99,7 +104,7 @@ export class PetsFacades {
   ): Observable<Tutorial[]> {
     this.store.dispatch(PetsPageActions.getTutorialsByCategory());
 
-    return this.petsService.getTutorialsByCategory(petId, category).pipe(
+    return this.tutorialsService.getTutorialsByCategory(petId, category).pipe(
       tap({
         next: (tutorials) => {
           this.store.dispatch(

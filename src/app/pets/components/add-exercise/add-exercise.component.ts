@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { GeolocationService } from "../../../shared/services/geolocation.service";
-import { Location } from "@nativescript/geolocation";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
 
 @Component({
   selector: "app-add-exercise",
@@ -9,46 +13,11 @@ import { Location } from "@nativescript/geolocation";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddExerciseComponent {
-  watchId: number = null;
-  locations: Location[] = [];
+  @Input() watchId: number;
 
-  constructor(private geolocationService: GeolocationService) {}
+  @Output() exerciseChanged = new EventEmitter<void>();
 
-  async onTap(): Promise<void> {
-    if (this.watchId) {
-      this.stopWatchingLocation();
-      return;
-    }
-
-    await this.startWatchingLocation();
-  }
-
-  private async startWatchingLocation(): Promise<void> {
-    const canUseLocation = await this.geolocationService.canUseLocation();
-
-    if (!canUseLocation) {
-      this.geolocationService.requestPermission().then(
-        () => {
-          this.watchId = this.geolocationService.watchLocation((location) => {
-            this.locations = [...this.locations, location];
-          });
-        },
-        () => {}
-      );
-
-      return;
-    }
-
-    this.watchId = this.geolocationService.watchLocation((location) => {
-      this.locations = [...this.locations, location];
-    });
-  }
-
-  private stopWatchingLocation() {
-    if (this.watchId) {
-      this.geolocationService.clearWatch(this.watchId);
-      this.watchId = null;
-      console.log(this.geolocationService.getTotalDistance(this.locations));
-    }
+  onExerciseChanged(): void {
+    this.exerciseChanged.emit();
   }
 }

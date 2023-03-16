@@ -13,3 +13,9 @@ export const getTutorialsByCategory = createAction(
 );
 
 export const clearTutorials = createAction("[Pets] Clear tutorials");
+
+export const getAllExercises = createAction("[Pets] Get all exercises");
+
+export const addExercise = createAction("[Pets] Add exercise");
+
+export const clearExercises = createAction("[Pets] Clear exercises");

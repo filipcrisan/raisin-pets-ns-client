@@ -2,6 +2,7 @@ import { createAction, props } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Pet } from "../models/pet.model";
 import { Tutorial } from "../models/tutorial.model";
+import { Exercise } from "../models/exercise.model";
 
 export const getAllPetsSuccess = createAction(
   "[Pets/API] Get all pets Success",
@@ -45,5 +46,25 @@ export const getTutorialsByCategorySuccess = createAction(
 
 export const getTutorialsByCategoryFailure = createAction(
   "[Pets/API] Get tutorials by category Failure",
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const getAllExercisesSuccess = createAction(
+  "[Pets/API] Get all exercises Success",
+  props<{ exercises: Exercise[] }>()
+);
+
+export const getAllExercisesFailure = createAction(
+  "[Pets/API] Get all exercises Failure",
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const addExerciseSuccess = createAction(
+  "[Pets/API] Add exercise Success",
+  props<{ exercise: Exercise }>()
+);
+
+export const addExerciseFailure = createAction(
+  "[Pets/API] Add exercise Failure",
   props<{ error: HttpErrorResponse }>()
 );

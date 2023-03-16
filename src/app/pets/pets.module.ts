@@ -24,6 +24,9 @@ import { PetMenuContainerComponent } from "./containers/pet-menu-container/pet-m
 import { ExercisesListContainerComponent } from "./containers/exercises-list-container/exercises-list-container.component";
 import { AddExerciseComponent } from "./components/add-exercise/add-exercise.component";
 import { AddExerciseContainerComponent } from "./containers/add-exercise-container/add-exercise-container.component";
+import { TutorialsService } from "./services/tutorials.service";
+import { ExercisesService } from "./services/exercises.service";
+import { ExercisesFacades } from "./facades/exercises.facades";
 
 @NgModule({
   declarations: [
@@ -50,7 +53,13 @@ import { AddExerciseContainerComponent } from "./containers/add-exercise-contain
     PetsRoutingModule,
     StoreModule.forFeature(featureKey, reducers),
   ],
-  providers: [PetsFacades, PetsService],
+  providers: [
+    PetsFacades,
+    PetsService,
+    TutorialsService,
+    ExercisesService,
+    ExercisesFacades,
+  ],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class PetsModule {}

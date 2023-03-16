@@ -3,8 +3,6 @@ import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Pet } from "../models/pet.model";
-import { TutorialCategory } from "../models/tutorial-category.model";
-import { Tutorial } from "../models/tutorial.model";
 
 @Injectable()
 export class PetsService {
@@ -26,14 +24,5 @@ export class PetsService {
 
   deletePet(id: number): Observable<Pet> {
     return this.http.delete<Pet>(`${this.apiUrl}/${id}`);
-  }
-
-  getTutorialsByCategory(
-    petId: number,
-    category: TutorialCategory
-  ): Observable<Tutorial[]> {
-    return this.http.get<Tutorial[]>(
-      `${this.apiUrl}/${petId}/tutorials?tutorialCategory=${category}`
-    );
   }
 }

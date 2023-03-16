@@ -3,6 +3,7 @@ import { Pet } from "../models/pet.model";
 import { PetsApiActions, PetsPageActions } from "../actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Tutorial } from "../models/tutorial.model";
+import { Exercise } from "../models/exercise.model";
 
 export const featureKey = "pets";
 
@@ -18,6 +19,12 @@ export interface State {
     loading: boolean;
     error: HttpErrorResponse;
   };
+  exercises: {
+    entities: Exercise[];
+    loading: boolean;
+    saving: boolean;
+    error: HttpErrorResponse;
+  };
 }
 
 export const initialState: State = {
@@ -30,6 +37,12 @@ export const initialState: State = {
   tutorials: {
     entities: [],
     loading: false,
+    error: null,
+  },
+  exercises: {
+    entities: [],
+    loading: false,
+    saving: false,
     error: null,
   },
 };
@@ -141,5 +154,59 @@ export const reducer = createReducer(
       loading: false,
       error: error,
     },
+  })),
+  on(PetsPageActions.getAllExercises, (state) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      loading: true,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.getAllExercisesSuccess, (state, { exercises }) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      entities: exercises,
+      loading: false,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.getAllExercisesFailure, (state, { error }) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      loading: false,
+      error: error,
+    },
+  })),
+  on(PetsPageActions.addExercise, (state) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      saving: true,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.addExerciseSuccess, (state, { exercise }) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      entities: [...state.exercises.entities, exercise],
+      saving: false,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.addExerciseFailure, (state, { error }) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      saving: false,
+      error: error,
+    },
+  })),
+  on(PetsPageActions.clearExercises, (state) => ({
+    ...state,
+    exercises: initialState.exercises,
   }))
 );
