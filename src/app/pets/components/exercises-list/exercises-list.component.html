@@ -1,4 +1,5 @@
 <StackLayout>
+    <Label [hidden]="loading || error || exercises?.length !== 0" text="No exercises to display." class="font-mono fields p-5"></Label>
     <ListView [hidden]="loading || error" [items]="exercises" class="h-full">
         <ng-template let-item="item">
             <DockLayout stretchLastChild="true">

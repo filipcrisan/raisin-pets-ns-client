@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  HostListener,
   OnDestroy,
   OnInit,
 } from "@angular/core";
@@ -39,7 +38,6 @@ export class ExercisesListContainerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  @HostListener("unloaded")
   ngOnDestroy(): void {
     this.exercisesFacades.clearExercises();
   }
@@ -51,6 +49,8 @@ export class ExercisesListContainerComponent implements OnInit, OnDestroy {
   }
 
   onSelectExercise(id: number): void {
-    console.log("selected ", id);
+    this.routerExtensions
+      .navigate([`pets/dashboard/exercise/${id}/details`])
+      .then();
   }
 }

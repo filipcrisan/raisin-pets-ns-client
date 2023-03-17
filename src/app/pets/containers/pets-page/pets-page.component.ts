@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RouterExtensions } from "@nativescript/angular";
-import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-pets-page",
@@ -9,10 +8,7 @@ import { ActivatedRoute } from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PetsPageComponent {
-  constructor(
-    private routerExtensions: RouterExtensions,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private routerExtensions: RouterExtensions) {}
 
   onNavigateToMenu(): void {
     this.routerExtensions.navigate(["pets/menu"]).then();

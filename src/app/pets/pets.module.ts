@@ -28,6 +28,8 @@ import { TutorialsService } from "./services/tutorials.service";
 import { ExercisesService } from "./services/exercises.service";
 import { ExercisesFacades } from "./facades/exercises.facades";
 import { ExercisesListComponent } from "./components/exercises-list/exercises-list.component";
+import { ExerciseDetailsContainerComponent } from "./containers/exercise-details-container/exercise-details-container.component";
+import { ExerciseDetailsComponent } from "./components/exercise-details/exercise-details.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { ExercisesListComponent } from "./components/exercises-list/exercises-li
     AddExerciseComponent,
     AddExerciseContainerComponent,
     ExercisesListComponent,
+    ExerciseDetailsContainerComponent,
+    ExerciseDetailsComponent,
   ],
   imports: [
     ReactiveFormsModule,

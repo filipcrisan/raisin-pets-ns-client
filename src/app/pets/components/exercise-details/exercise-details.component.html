@@ -1,0 +1,9 @@
+<StackLayout class="bg-landing-page-yellow pt-20">
+    <StackLayout [hidden]="loading">
+        <Label textWrap="true" [text]="exercise.name" verticalAlignment="center" class="font-mono text-3xl mr-3"></Label>
+        <Label textWrap="true" [text]="'Total distance: ' + exercise.totalDistance" verticalAlignment="center" class="font-mono text-xl mr-3"></Label>
+        <Label textWrap="true" [text]="'Average speed: ' + exercise.averageSpeed" verticalAlignment="center" class="font-mono text-xl mr-3"></Label>
+    </StackLayout>
+
+    <ActivityIndicator [busy]="loading"></ActivityIndicator>
+</StackLayout>

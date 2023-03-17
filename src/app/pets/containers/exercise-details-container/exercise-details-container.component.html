@@ -1,0 +1,5 @@
+<app-exercise-details
+    [exercise]="exercise$ | async"
+    [loading]="exercisesQuery.loading$ | async"
+    [error]="exercisesQuery.error$ | async"
+></app-exercise-details>

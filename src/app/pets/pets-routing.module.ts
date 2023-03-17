@@ -11,6 +11,7 @@ import { TutorialsListContainerComponent } from "./containers/tutorials-list-con
 import { PetMenuContainerComponent } from "./containers/pet-menu-container/pet-menu-container.component";
 import { ExercisesListContainerComponent } from "./containers/exercises-list-container/exercises-list-container.component";
 import { AddExerciseContainerComponent } from "./containers/add-exercise-container/add-exercise-container.component";
+import { ExerciseDetailsContainerComponent } from "./containers/exercise-details-container/exercise-details-container.component";
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
       {
         path: "add-exercise/:id",
         component: AddExerciseContainerComponent,
+      },
+      {
+        path: "exercise/:id/details",
+        component: ExerciseDetailsContainerComponent,
       },
     ],
   },

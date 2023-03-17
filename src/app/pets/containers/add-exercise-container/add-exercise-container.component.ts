@@ -97,11 +97,7 @@ export class AddExerciseContainerComponent implements OnDestroy {
         untilDestroyed(this),
         tap({
           next: () => {
-            this.routerExtensions
-              .navigate([`exercises/${this.petId}`], {
-                relativeTo: this.activatedRoute.parent,
-              })
-              .then();
+            this.routerExtensions.backToPreviousPage();
           },
         })
       )
