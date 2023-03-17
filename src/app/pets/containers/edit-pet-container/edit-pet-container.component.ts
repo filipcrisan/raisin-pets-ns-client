@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { PetsFacades } from "../../facades/pets.facades";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Pet } from "../../models/pet.model";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { BehaviorSubject, filter, map, tap } from "rxjs";
 import { CameraService } from "../../../shared/services/camera.service";
+import { RouterExtensions } from "@nativescript/angular";
 
 @UntilDestroy()
 @Component({
@@ -24,7 +25,7 @@ export class EditPetContainerComponent {
 
   constructor(
     private petsFacades: PetsFacades,
-    private router: Router,
+    private routerExtensions: RouterExtensions,
     private activatedRoute: ActivatedRoute,
     private cameraService: CameraService
   ) {
@@ -47,11 +48,7 @@ export class EditPetContainerComponent {
         untilDestroyed(this),
         tap({
           next: () => {
-            this.router
-              .navigate(["list"], {
-                relativeTo: this.activatedRoute.parent,
-              })
-              .then();
+            this.routerExtensions.backToPreviousPage();
           },
         })
       )

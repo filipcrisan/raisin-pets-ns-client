@@ -33,11 +33,7 @@ export class AddPetContainerComponent {
         untilDestroyed(this),
         tap({
           next: () => {
-            this.routerExtensions
-              .navigate(["list"], {
-                relativeTo: this.activatedRoute.parent,
-              })
-              .then();
+            this.routerExtensions.backToPreviousPage();
           },
         })
       )
