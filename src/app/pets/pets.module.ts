@@ -27,6 +27,7 @@ import { AddExerciseContainerComponent } from "./containers/add-exercise-contain
 import { TutorialsService } from "./services/tutorials.service";
 import { ExercisesService } from "./services/exercises.service";
 import { ExercisesFacades } from "./facades/exercises.facades";
+import { ExercisesListComponent } from "./components/exercises-list/exercises-list.component";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ExercisesFacades } from "./facades/exercises.facades";
     ExercisesListContainerComponent,
     AddExerciseComponent,
     AddExerciseContainerComponent,
+    ExercisesListComponent,
   ],
   imports: [
     ReactiveFormsModule,

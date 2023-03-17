@@ -51,4 +51,15 @@ export class GeolocationService {
 
     return result;
   }
+
+  getAverageSpeed(locations: Location[]): number {
+    if (locations.length < 2) {
+      return 0;
+    }
+
+    let total = 0;
+    locations.forEach((x) => (total += x.speed));
+
+    return total / locations.length;
+  }
 }

@@ -6,7 +6,14 @@ import {
 } from "@angular/core";
 import { Location } from "@nativescript/geolocation";
 import { GeolocationService } from "../../../shared/services/geolocation.service";
+import { ExercisesFacades } from "../../facades/exercises.facades";
+import { ActivatedRoute } from "@angular/router";
+import { Checkpoint } from "../../models/checkpoint.model";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { tap } from "rxjs";
+import { RouterExtensions } from "@nativescript/angular";
 
+@UntilDestroy()
 @Component({
   selector: "app-add-exercise-container",
   templateUrl: "./add-exercise-container.component.html",
@@ -14,21 +21,28 @@ import { GeolocationService } from "../../../shared/services/geolocation.service
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddExerciseContainerComponent implements OnDestroy {
+  petId!: number;
   watchId: number = null;
   locations: Location[] = [];
 
-  constructor(private geolocationService: GeolocationService) {}
+  constructor(
+    private geolocationService: GeolocationService,
+    private exercisesFacades: ExercisesFacades,
+    private activatedRoute: ActivatedRoute,
+    private routerExtensions: RouterExtensions
+  ) {
+    this.petId = +this.activatedRoute.snapshot.params["id"];
+  }
 
   @HostListener("unloaded")
   ngOnDestroy() {
-    console.log("Items destroyed");
     this.stopWatchingLocation();
   }
 
   async onExerciseChanged(): Promise<void> {
     if (this.watchId) {
       this.stopWatchingLocation();
-      // TODO: save the exercise session here
+      this.saveExercise();
       return;
     }
 
@@ -62,5 +76,35 @@ export class AddExerciseContainerComponent implements OnDestroy {
       this.watchId = null;
       console.log(this.geolocationService.getTotalDistance(this.locations));
     }
+  }
+
+  private saveExercise(): void {
+    const checkpoints = this.locations.map((x) => {
+      const checkpoint: Checkpoint = { ...x };
+      return checkpoint;
+    });
+
+    const exercise = {
+      petId: this.petId,
+      totalDistance: this.geolocationService.getTotalDistance(this.locations),
+      averageSpeed: this.geolocationService.getAverageSpeed(this.locations),
+      checkpoints,
+    };
+
+    this.exercisesFacades
+      .addExercise(exercise)
+      .pipe(
+        untilDestroyed(this),
+        tap({
+          next: () => {
+            this.routerExtensions
+              .navigate([`exercises/${this.petId}`], {
+                relativeTo: this.activatedRoute.parent,
+              })
+              .then();
+          },
+        })
+      )
+      .subscribe();
   }
 }

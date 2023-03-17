@@ -4,5 +4,10 @@
         <Label text="Add exercise session" verticalAlignment="center" class="font-mono mr-3"></Label>
     </StackLayout>
 
-    <!-- TODO: add the list here -->
+    <app-exercises-list
+        [exercises]="exercisesQuery.entities$ | async"
+        [loading]="exercisesQuery.loading$ | async"
+        [error]="exercisesQuery.error$ | async"
+        (selectExercise)="onSelectExercise($event)"
+    ></app-exercises-list>
 </StackLayout>
