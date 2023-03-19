@@ -41,6 +41,23 @@ export class AddPetContainerComponent {
   }
 
   async onTakePicture(): Promise<void> {
+    const canUseCamera = this.cameraService.canUseCamera();
+
+    if (!canUseCamera) {
+      this.cameraService.requestPermission().then(
+        async () => {
+          await this.takePicture();
+        },
+        () => {}
+      );
+
+      return;
+    }
+
+    await this.takePicture();
+  }
+
+  private async takePicture(): Promise<void> {
     const image = await this.cameraService.takePicture();
 
     this.avatarInBase64$.next(

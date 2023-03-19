@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: "https://efaa-188-27-131-120.eu.ngrok.io/api",
+  apiUrl: "https://9374-188-27-131-120.eu.ngrok.io/api",
 };

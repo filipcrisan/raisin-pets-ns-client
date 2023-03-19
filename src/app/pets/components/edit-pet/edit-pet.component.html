@@ -1,47 +1,49 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
-    <StackLayout [hidden]="saving">
-        <StackLayout orientation="horizontal" (tap)="onChangeAvatar()" class="rounded-full border-solid border-2 border-black mt-2 w-44 h-11">
-            <Image src="~/assets/icons/camera.png"  class="w-9 h-9 mr-2 ml-3"></Image>
-            <Label text="Change avatar" verticalAlignment="center" class="font-mono mr-3"></Label>
-        </StackLayout>
-
-        <Image [hidden]="!avatarInBase64" [src]="avatarInBase64" class="w-40 h-40"></Image>
-
-        <form [formGroup]="petForm">
-            <Label text="Name" class="font-mono fields"></Label>
-            <TextField formControlName="name" class="font-mono fields"></TextField>
-            <Label *ngIf="petForm.touched && petForm.controls.name.errors" text="Name is required" class="font-mono text-center text-red-800"></Label>
-            <Label text="Date of birth (approx.)" class="font-mono fields"></Label>
-            <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
-                <DatePicker formControlName="dateOfBirth"></DatePicker>
+    <ScrollView>
+        <StackLayout [hidden]="saving">
+            <StackLayout orientation="horizontal" (tap)="onChangeAvatar()" class="rounded-full border-solid border-2 border-black mt-2 w-44 h-11">
+                <Image src="~/assets/icons/camera.png"  class="w-9 h-9 mr-2 ml-3"></Image>
+                <Label text="Change avatar" verticalAlignment="center" class="font-mono mr-3"></Label>
             </StackLayout>
-        </form>
-        <Label text="Species" class="font-mono fields"></Label>
-        <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
-            <DropDown
-                    [(ngModel)]="selectedSpeciesIndex"
-                    [items]="species"
-                    (selectedIndexChanged)="onSpeciesChange($event)"
-                    class="font-mono fields m-2"
-            >
-            </DropDown>
-        </StackLayout>
-        <Label text="Size" class="font-mono fields"></Label>
-        <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
-            <DropDown
-                    [(ngModel)]="selectedSizeIndex"
-                    [items]="sizes"
-                    (selectedIndexChanged)="onSizeChange($event)"
-                    class="font-mono fields m-2"
-            >
-            </DropDown>
-        </StackLayout>
 
-        <StackLayout orientation="horizontal" (tap)="onSave()" class="rounded-full border-solid border-2 border-black mt-2 w-40 h-11">
-            <Image src="~/assets/icons/save.png"  class="w-9 h-9 mr-2 ml-3"></Image>
-            <Label text="Save details" verticalAlignment="center" class="font-mono mr-3"></Label>
+            <Image [hidden]="!avatarInBase64" [src]="avatarInBase64" class="w-40 h-40"></Image>
+
+            <form [formGroup]="petForm">
+                <Label text="Name" class="font-mono fields"></Label>
+                <TextField formControlName="name" class="font-mono fields"></TextField>
+                <Label *ngIf="petForm.touched && petForm.controls.name.errors" text="Name is required" class="font-mono text-center text-red-800"></Label>
+                <Label text="Date of birth (approx.)" class="font-mono fields"></Label>
+                <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
+                    <DatePicker formControlName="dateOfBirth"></DatePicker>
+                </StackLayout>
+            </form>
+            <Label text="Species" class="font-mono fields"></Label>
+            <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
+                <DropDown
+                        [(ngModel)]="selectedSpeciesIndex"
+                        [items]="species"
+                        (selectedIndexChanged)="onSpeciesChange($event)"
+                        class="font-mono fields m-2"
+                >
+                </DropDown>
+            </StackLayout>
+            <Label text="Size" class="font-mono fields"></Label>
+            <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
+                <DropDown
+                        [(ngModel)]="selectedSizeIndex"
+                        [items]="sizes"
+                        (selectedIndexChanged)="onSizeChange($event)"
+                        class="font-mono fields m-2"
+                >
+                </DropDown>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal" (tap)="onSave()" class="rounded-full border-solid border-2 border-black mt-2 w-40 h-11">
+                <Image src="~/assets/icons/save.png"  class="w-9 h-9 mr-2 ml-3"></Image>
+                <Label text="Save details" verticalAlignment="center" class="font-mono mr-3"></Label>
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </ScrollView>
 
     <ActivityIndicator [busy]="saving"></ActivityIndicator>
 </StackLayout>

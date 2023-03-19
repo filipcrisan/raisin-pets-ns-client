@@ -6,6 +6,14 @@ import { ImageSource } from "@nativescript/core";
   providedIn: "root",
 })
 export class CameraService {
+  requestPermission(): Promise<void> {
+    return camera.requestCameraPermissions();
+  }
+
+  canUseCamera(): boolean {
+    return camera.isAvailable().valueOf();
+  }
+
   async takePicture(): Promise<ImageSource> {
     const options = {
       width: 300,
@@ -21,9 +29,5 @@ export class CameraService {
 
   getImageUrl(imageInBase64: string): string {
     return "data:image/jpg;base64," + imageInBase64;
-  }
-
-  get isCameraAvailable(): boolean {
-    return camera.isAvailable().valueOf();
   }
 }

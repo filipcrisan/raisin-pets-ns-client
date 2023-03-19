@@ -55,9 +55,7 @@ export class AddExerciseContainerComponent implements OnDestroy {
     if (!canUseLocation) {
       this.geolocationService.requestPermission().then(
         () => {
-          this.watchId = this.geolocationService.watchLocation((location) => {
-            this.locations = [...this.locations, location];
-          });
+          this.watchLocation();
         },
         () => {}
       );
@@ -65,6 +63,10 @@ export class AddExerciseContainerComponent implements OnDestroy {
       return;
     }
 
+    this.watchLocation();
+  }
+
+  private watchLocation(): void {
     this.watchId = this.geolocationService.watchLocation((location) => {
       this.locations = [...this.locations, location];
     });
