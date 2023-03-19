@@ -30,6 +30,7 @@ import { ExercisesFacades } from "./facades/exercises.facades";
 import { ExercisesListComponent } from "./components/exercises-list/exercises-list.component";
 import { ExerciseDetailsContainerComponent } from "./containers/exercise-details-container/exercise-details-container.component";
 import { ExerciseDetailsComponent } from "./components/exercise-details/exercise-details.component";
+import { GoogleMapsModule } from "@nativescript/google-maps/angular";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { ExerciseDetailsComponent } from "./components/exercise-details/exercise
     NativeScriptCommonModule,
     PetsRoutingModule,
     StoreModule.forFeature(featureKey, reducers),
+    GoogleMapsModule,
   ],
   providers: [
     PetsFacades,

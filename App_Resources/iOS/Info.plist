@@ -79,5 +79,7 @@
     <string>raisin&apos; pets wants to use your device's location</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>App requires background tracking</string>
+    <key>TNSGoogleMapsAPIKey</key>
+    <string>AIzaSyCqYxBHkSb43EaeKS3U1MJ54_htPSFVj4E</string>
 </dict>
 </plist>

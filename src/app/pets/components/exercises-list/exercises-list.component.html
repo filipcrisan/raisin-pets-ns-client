@@ -5,7 +5,7 @@
             <DockLayout stretchLastChild="true">
                 <Label textWrap="true" class="text-left w-52" dock="left" (tap)="onSelectExercise(item.id)">
                     <FormattedString>
-                        <Span [text]="item.name"  class="font-mono"></Span>
+                        <Span [text]="'#' + item.id + ' ' + item.name"  class="font-mono"></Span>
                     </FormattedString>
                 </Label>
                 <Image id="menuButton" (tap)="onActionsTap(item.id)" src="~/assets/icons/context-menu.png" class="w-9 h-9" dock="left"></Image>
