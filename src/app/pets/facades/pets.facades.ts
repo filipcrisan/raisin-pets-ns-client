@@ -9,6 +9,7 @@ import { petsQuery } from "../reducers/pets.selector";
 import { TutorialCategory } from "../models/tutorial-category.model";
 import { Tutorial } from "../models/tutorial.model";
 import { TutorialsService } from "../services/tutorials.service";
+import { Toasty } from "@triniwiz/nativescript-toasty";
 
 @Injectable()
 export class PetsFacades {
@@ -41,7 +42,9 @@ export class PetsFacades {
           this.store.dispatch(PetsApiActions.getAllPetsSuccess({ pets }));
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon fetching pets. Please try again.",
+          }).show();
 
           this.store.dispatch(PetsApiActions.getAllPetsFailure({ error }));
         },
@@ -58,7 +61,9 @@ export class PetsFacades {
           this.store.dispatch(PetsApiActions.addPetSuccess({ pet }));
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon adding pet. Please try again.",
+          }).show();
 
           this.store.dispatch(PetsApiActions.addPetFailure({ error }));
         },
@@ -75,7 +80,9 @@ export class PetsFacades {
           this.store.dispatch(PetsApiActions.editPetSuccess({ pet }));
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon editing pet. Please try again.",
+          }).show();
 
           this.store.dispatch(PetsApiActions.editPetFailure({ error }));
         },
@@ -92,7 +99,9 @@ export class PetsFacades {
           this.store.dispatch(PetsApiActions.deletePetSuccess({ pet }));
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon deleting pet. Please try again.",
+          }).show();
         },
       })
     );
@@ -112,7 +121,9 @@ export class PetsFacades {
           );
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon fetching tutorials. Please try again.",
+          }).show();
 
           this.store.dispatch(
             PetsApiActions.getTutorialsByCategoryFailure({ error })

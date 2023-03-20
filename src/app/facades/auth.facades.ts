@@ -9,6 +9,7 @@ import { JwtHelperService } from "nativescript-angular-jwt";
 import { Store } from "@ngrx/store";
 import { authQuery } from "~/app/reducers/auth.selector";
 import { AuthActions } from "~/app/actions";
+import { Toasty } from "@triniwiz/nativescript-toasty";
 
 @UntilDestroy()
 @Injectable()
@@ -35,8 +36,10 @@ export class AuthFacades {
 
         this.onGoogleSignIn(googleUser.idToken);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        new Toasty({
+          text: "Google error upon login. Please try again.",
+        }).show();
       });
   }
 
@@ -45,8 +48,10 @@ export class AuthFacades {
       .then(() => {
         this.onGoogleSignOut();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        new Toasty({
+          text: "Google error upon logout. Please try again.",
+        }).show();
       });
   }
 
@@ -68,6 +73,10 @@ export class AuthFacades {
           this.routerExtensions.navigate(["pets"]).then();
         },
         error: (error: HttpErrorResponse) => {
+          new Toasty({
+            text: "Error upon loading user. Please try again.",
+          }).show();
+
           this.store.dispatch(AuthActions.loadUserFailure({ error }));
         },
       });
@@ -103,6 +112,10 @@ export class AuthFacades {
           this.routerExtensions.navigate(["pets"]).then();
         },
         error: (error: HttpErrorResponse) => {
+          new Toasty({
+            text: "Error upon authentication. Please try again.",
+          }).show();
+
           this.store.dispatch(AuthActions.loadUserFailure({ error }));
         },
       });
@@ -117,9 +130,12 @@ export class AuthFacades {
           appSettings.remove("token");
           this.routerExtensions.navigate([""], { clearHistory: true }).then();
         },
-        error: (error: HttpErrorResponse) => {
+        error: () => {
           appSettings.remove("token");
-          console.log(error);
+
+          new Toasty({
+            text: "Error upon logout. Please try again.",
+          }).show();
         },
       });
   }
@@ -135,13 +151,17 @@ export class AuthFacades {
               appSettings.remove("token");
               this.onGoogleSignIn(token);
             },
-            error: (error: HttpErrorResponse) => {
-              console.log(error);
+            error: () => {
+              new Toasty({
+                text: "Error upon logout. Please try again.",
+              }).show();
             },
           });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        new Toasty({
+          text: "Google error upon logout. Please try again.",
+        }).show();
       });
   }
 

@@ -6,6 +6,7 @@ import { PetsApiActions, PetsPageActions } from "../actions";
 import { petsQuery } from "../reducers/pets.selector";
 import { ExercisesService } from "../services/exercises.service";
 import { Exercise } from "../models/exercise.model";
+import { Toasty } from "@triniwiz/nativescript-toasty";
 
 @Injectable()
 export class ExercisesFacades {
@@ -34,7 +35,9 @@ export class ExercisesFacades {
           );
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon fetching exercises. Please try again.",
+          }).show();
 
           this.store.dispatch(PetsApiActions.getAllExercisesFailure({ error }));
         },
@@ -51,7 +54,9 @@ export class ExercisesFacades {
           this.store.dispatch(PetsApiActions.addExerciseSuccess({ exercise }));
         },
         error: (error: HttpErrorResponse) => {
-          // TODO: add toast notification service
+          new Toasty({
+            text: "Error upon adding exercise. Please try again.",
+          }).show();
 
           this.store.dispatch(PetsApiActions.addExerciseFailure({ error }));
         },

@@ -3,6 +3,7 @@ import * as geolocation from "@nativescript/geolocation";
 import { CoreTypes } from "@nativescript/core";
 import Accuracy = CoreTypes.Accuracy;
 import { Location, successCallbackType } from "@nativescript/geolocation";
+import { Toasty } from "@triniwiz/nativescript-toasty";
 
 @Injectable({
   providedIn: "root",
@@ -19,8 +20,10 @@ export class GeolocationService {
   watchLocation(successCallback: successCallbackType): number {
     return geolocation.watchLocation(
       successCallback,
-      (error) => {
-        console.log(error);
+      () => {
+        new Toasty({
+          text: "Error upon tracking your location. Please try again.",
+        }).show();
       },
       {
         desiredAccuracy: Accuracy.high,

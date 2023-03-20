@@ -76,7 +76,6 @@ export class AddExerciseContainerComponent implements OnDestroy {
     if (this.watchId) {
       this.geolocationService.clearWatch(this.watchId);
       this.watchId = null;
-      console.log(this.geolocationService.getTotalDistance(this.locations));
     }
   }
 
