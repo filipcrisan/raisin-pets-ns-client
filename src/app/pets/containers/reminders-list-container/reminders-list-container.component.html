@@ -4,5 +4,11 @@
         <Label text="Add reminder" verticalAlignment="center" class="font-mono mr-3"></Label>
     </StackLayout>
 
-    <!-- TODO: add reminders list -->
+    <app-reminders-list
+        [reminders]="remindersQuery.entities$ | async"
+        [loading]="remindersQuery.loading$ | async"
+        [error]="remindersQuery.error$ | async"
+        (delete)="onDelete($event)"
+        (selectReminder)="onSelect($event)"
+    ></app-reminders-list>
 </StackLayout>

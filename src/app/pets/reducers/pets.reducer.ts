@@ -4,6 +4,7 @@ import { PetsApiActions, PetsPageActions } from "../actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Tutorial } from "../models/tutorial.model";
 import { Exercise } from "../models/exercise.model";
+import { Reminder } from "../models/reminder.model";
 
 export const featureKey = "pets";
 
@@ -25,6 +26,12 @@ export interface State {
     saving: boolean;
     error: HttpErrorResponse;
   };
+  reminders: {
+    entities: Reminder[];
+    loading: boolean;
+    saving: boolean;
+    error: HttpErrorResponse;
+  };
 }
 
 export const initialState: State = {
@@ -40,6 +47,12 @@ export const initialState: State = {
     error: null,
   },
   exercises: {
+    entities: [],
+    loading: false,
+    saving: false,
+    error: null,
+  },
+  reminders: {
     entities: [],
     loading: false,
     saving: false,
@@ -208,5 +221,68 @@ export const reducer = createReducer(
   on(PetsPageActions.clearExercises, (state) => ({
     ...state,
     exercises: initialState.exercises,
+  })),
+  on(PetsPageActions.getAllReminders, (state) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      loading: true,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.getAllRemindersSuccess, (state, { reminders }) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      entities: reminders,
+      loading: false,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.getAllRemindersFailure, (state, { error }) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      loading: false,
+      error: error,
+    },
+  })),
+  on(PetsPageActions.addReminder, PetsPageActions.deleteReminder, (state) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      saving: true,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.addReminderSuccess, (state, { reminder }) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      entities: [...state.reminders.entities, reminder],
+      saving: false,
+      error: null,
+    },
+  })),
+  on(PetsApiActions.addReminderFailure, (state, { error }) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      saving: false,
+      error: error,
+    },
+  })),
+  on(PetsApiActions.deleteReminderSuccess, (state, { reminder }) => ({
+    ...state,
+    reminders: {
+      ...state.reminders,
+      entities: state.reminders.entities.filter((x) => x.id !== reminder.id),
+      saving: false,
+      error: null,
+    },
+  })),
+  on(PetsPageActions.clearReminders, (state) => ({
+    ...state,
+    reminders: initialState.reminders,
   }))
 );

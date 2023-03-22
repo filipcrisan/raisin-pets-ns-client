@@ -3,6 +3,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Pet } from "../models/pet.model";
 import { Tutorial } from "../models/tutorial.model";
 import { Exercise } from "../models/exercise.model";
+import { Reminder } from "../models/reminder.model";
 
 export const getAllPetsSuccess = createAction(
   "[Pets/API] Get all pets Success",
@@ -67,4 +68,29 @@ export const addExerciseSuccess = createAction(
 export const addExerciseFailure = createAction(
   "[Pets/API] Add exercise Failure",
   props<{ error: HttpErrorResponse }>()
+);
+
+export const getAllRemindersSuccess = createAction(
+  "[Pets/API] Get all reminders Success",
+  props<{ reminders: Reminder[] }>()
+);
+
+export const getAllRemindersFailure = createAction(
+  "[Pets/API] Get all reminders Failure",
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const addReminderSuccess = createAction(
+  "[Pets/API] Add reminder Success",
+  props<{ reminder: Reminder }>()
+);
+
+export const addReminderFailure = createAction(
+  "[Pets/API] Add reminder Failure",
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const deleteReminderSuccess = createAction(
+  "[Pets/API] Delete reminder Success",
+  props<{ reminder: Reminder }>()
 );

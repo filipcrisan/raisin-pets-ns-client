@@ -32,6 +32,9 @@ import { ExerciseDetailsContainerComponent } from "./containers/exercise-details
 import { ExerciseDetailsComponent } from "./components/exercise-details/exercise-details.component";
 import { GoogleMapsModule } from "@nativescript/google-maps/angular";
 import { RemindersListContainerComponent } from "./containers/reminders-list-container/reminders-list-container.component";
+import { RemindersListComponent } from "./components/reminders-list/reminders-list.component";
+import { RemindersFacades } from "./facades/reminders.facades";
+import { RemindersService } from "./services/reminders.service";
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import { RemindersListContainerComponent } from "./containers/reminders-list-con
     ExerciseDetailsContainerComponent,
     ExerciseDetailsComponent,
     RemindersListContainerComponent,
+    RemindersListComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -69,6 +73,8 @@ import { RemindersListContainerComponent } from "./containers/reminders-list-con
     TutorialsService,
     ExercisesService,
     ExercisesFacades,
+    RemindersFacades,
+    RemindersService,
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

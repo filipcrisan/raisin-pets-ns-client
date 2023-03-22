@@ -19,3 +19,11 @@ export const getAllExercises = createAction("[Pets] Get all exercises");
 export const addExercise = createAction("[Pets] Add exercise");
 
 export const clearExercises = createAction("[Pets] Clear exercises");
+
+export const getAllReminders = createAction("[Pets] Get all reminders");
+
+export const addReminder = createAction("[Pets] Add reminder");
+
+export const deleteReminder = createAction("[Pets] Delete reminder");
+
+export const clearReminders = createAction("[Pets] Clear reminders");

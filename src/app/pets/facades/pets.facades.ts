@@ -98,7 +98,7 @@ export class PetsFacades {
         next: (pet) => {
           this.store.dispatch(PetsApiActions.deletePetSuccess({ pet }));
         },
-        error: (error: HttpErrorResponse) => {
+        error: () => {
           new Toasty({
             text: "Error upon deleting pet. Please try again.",
           }).show();

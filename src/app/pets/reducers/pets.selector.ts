@@ -55,6 +55,26 @@ const getExercisesSaving = createSelector(
   (state) => state.exercises.saving
 );
 
+const getReminders = createSelector(
+  getPetsState,
+  (state) => state.reminders.entities
+);
+
+const getRemindersLoading = createSelector(
+  getPetsState,
+  (state) => state.reminders.loading
+);
+
+const getRemindersError = createSelector(
+  getPetsState,
+  (state) => state.reminders.error
+);
+
+const getRemindersSaving = createSelector(
+  getPetsState,
+  (state) => state.reminders.saving
+);
+
 export const petsQuery = {
   getPets,
   getPetsLoading,
@@ -67,4 +87,8 @@ export const petsQuery = {
   getExercisesLoading,
   getExercisesError,
   getExercisesSaving,
+  getReminders,
+  getRemindersLoading,
+  getRemindersError,
+  getRemindersSaving,
 };
