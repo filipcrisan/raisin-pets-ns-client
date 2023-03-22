@@ -31,6 +31,7 @@ import { ExercisesListComponent } from "./components/exercises-list/exercises-li
 import { ExerciseDetailsContainerComponent } from "./containers/exercise-details-container/exercise-details-container.component";
 import { ExerciseDetailsComponent } from "./components/exercise-details/exercise-details.component";
 import { GoogleMapsModule } from "@nativescript/google-maps/angular";
+import { RemindersListContainerComponent } from "./containers/reminders-list-container/reminders-list-container.component";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { GoogleMapsModule } from "@nativescript/google-maps/angular";
     ExercisesListComponent,
     ExerciseDetailsContainerComponent,
     ExerciseDetailsComponent,
+    RemindersListContainerComponent,
   ],
   imports: [
     ReactiveFormsModule,

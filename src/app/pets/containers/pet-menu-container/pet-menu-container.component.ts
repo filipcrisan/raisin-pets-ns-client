@@ -29,4 +29,10 @@ export class PetMenuContainerComponent {
       .navigate([`pets/dashboard/exercises/${this.petId}`])
       .then();
   }
+
+  onGoToReminders(): void {
+    this.routerExtensions
+      .navigate([`pets/dashboard/reminders/${this.petId}`])
+      .then();
+  }
 }
