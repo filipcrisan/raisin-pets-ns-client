@@ -37,6 +37,7 @@ import { RemindersFacades } from "./facades/reminders.facades";
 import { RemindersService } from "./services/reminders.service";
 import { AddReminderContainerComponent } from "./containers/add-reminder-container/add-reminder-container.component";
 import { AddReminderComponent } from "./components/add-reminder/add-reminder.component";
+import { DecimalPipe } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { AddReminderComponent } from "./components/add-reminder/add-reminder.com
     ExercisesFacades,
     RemindersFacades,
     RemindersService,
+    DecimalPipe,
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

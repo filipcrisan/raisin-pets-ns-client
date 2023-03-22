@@ -5,7 +5,6 @@ import {
   OnInit,
 } from "@angular/core";
 import { LocalNotificationsService } from "../../../shared/services/local-notifications.service";
-import { Toasty } from "@triniwiz/nativescript-toasty";
 import { RouterExtensions } from "@nativescript/angular";
 import { ActivatedRoute } from "@angular/router";
 import { RemindersFacades } from "../../facades/reminders.facades";
@@ -64,9 +63,6 @@ export class RemindersListContainerComponent implements OnInit, OnDestroy {
             untilDestroyed(this),
             tap({
               next: async () => {
-                new Toasty({
-                  text: "Cancelling local notification...",
-                }).show();
                 await this.localNotificationsService.cancel(reminderId);
               },
             })

@@ -8,6 +8,7 @@ import {
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Reminder } from "../../models/reminder.model";
+import { DecimalPipe } from "@angular/common";
 
 @Component({
   selector: "app-add-reminder",
@@ -26,13 +27,18 @@ export class AddReminderComponent {
     time: new FormControl<Date>(new Date(Date.now())),
   });
 
+  constructor(private decimalPipe: DecimalPipe) {}
+
   onSave(): void {
     if (!this.reminderForm.valid) {
       return;
     }
 
     const reminder: Reminder = {
-      title: `It's ${this.time.getHours()}:${this.time.getMinutes()}!`,
+      title: `It's ${this.decimalPipe.transform(
+        this.time.getHours(),
+        "2.0"
+      )}:${this.decimalPipe.transform(this.time.getMinutes(), "2.0")}!`,
       body: this.body,
       hours: this.time.getHours(),
       minutes: this.time.getMinutes(),
