@@ -35,6 +35,8 @@ import { RemindersListContainerComponent } from "./containers/reminders-list-con
 import { RemindersListComponent } from "./components/reminders-list/reminders-list.component";
 import { RemindersFacades } from "./facades/reminders.facades";
 import { RemindersService } from "./services/reminders.service";
+import { AddReminderContainerComponent } from "./containers/add-reminder-container/add-reminder-container.component";
+import { AddReminderComponent } from "./components/add-reminder/add-reminder.component";
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { RemindersService } from "./services/reminders.service";
     ExerciseDetailsComponent,
     RemindersListContainerComponent,
     RemindersListComponent,
+    AddReminderContainerComponent,
+    AddReminderComponent,
   ],
   imports: [
     ReactiveFormsModule,

@@ -1,6 +1,6 @@
 export interface Reminder {
-  id: number;
-  petId: number;
+  id?: number;
+  petId?: number;
   title: string;
   body: string;
   hours: number;

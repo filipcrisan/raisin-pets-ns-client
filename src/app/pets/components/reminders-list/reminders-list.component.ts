@@ -5,14 +5,10 @@ import {
   Input,
   Output,
 } from "@angular/core";
-import { Exercise } from "../../models/exercise.model";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Page } from "@nativescript/core";
 import { Menu } from "nativescript-menu";
 import { Reminder } from "../../models/reminder.model";
-import { Pet } from "../../models/pet.model";
-import { Species } from "../../models/species.model";
-import { Const } from "../../models/constants.model";
 
 @Component({
   selector: "app-reminders-list",
@@ -26,7 +22,6 @@ export class RemindersListComponent {
   @Input() error: HttpErrorResponse;
 
   @Output() delete = new EventEmitter<number>();
-  @Output() selectReminder = new EventEmitter<number>();
 
   constructor(private page: Page) {}
 
@@ -44,9 +39,5 @@ export class RemindersListComponent {
         this.delete.emit(id);
       })
       .catch(console.log);
-  }
-
-  onSelectReminder(id: number): void {
-    this.selectReminder.emit(id);
   }
 }

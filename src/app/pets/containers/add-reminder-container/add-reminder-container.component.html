@@ -1,0 +1,5 @@
+<app-add-reminder
+    [saving]="remindersQuery.saving$ | async"
+    [error]="remindersQuery.error$ | async"
+    (addReminder)="onAddReminder($event)"
+></app-add-reminder>

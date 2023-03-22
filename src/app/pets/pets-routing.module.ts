@@ -13,6 +13,7 @@ import { ExercisesListContainerComponent } from "./containers/exercises-list-con
 import { AddExerciseContainerComponent } from "./containers/add-exercise-container/add-exercise-container.component";
 import { ExerciseDetailsContainerComponent } from "./containers/exercise-details-container/exercise-details-container.component";
 import { RemindersListContainerComponent } from "./containers/reminders-list-container/reminders-list-container.component";
+import { AddReminderContainerComponent } from "./containers/add-reminder-container/add-reminder-container.component";
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: "reminders/:id",
         component: RemindersListContainerComponent,
+      },
+      {
+        path: "add-reminder/:id",
+        component: AddReminderContainerComponent,
       },
     ],
   },

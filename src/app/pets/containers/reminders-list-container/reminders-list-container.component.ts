@@ -11,6 +11,7 @@ import { ActivatedRoute } from "@angular/router";
 import { RemindersFacades } from "../../facades/reminders.facades";
 import { Dialogs } from "@nativescript/core";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { tap } from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -40,32 +41,14 @@ export class RemindersListContainerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  async ngOnDestroy(): Promise<void> {
-    new Toasty({
-      text: "Cancelling all local notifications...",
-    }).show();
-    await this.localNotificationsService.cancelAll();
+  ngOnDestroy(): void {
     this.remindersFacades.clearReminders();
   }
 
-  async onAddReminder(): Promise<void> {
-    const canSendNotifications =
-      (await this.localNotificationsService.canSendLocalNotifications()) ||
-      (await this.localNotificationsService.requestPermission());
-
-    if (!canSendNotifications) {
-      return;
-    }
-
-    this.localNotificationsService.schedule({
-      id: 1,
-      petId: this.petId,
-      title: "it's time",
-      body: "wow",
-      hours: 14,
-      minutes: 53,
-      enabled: true,
-    });
+  onAddReminder(): void {
+    this.routerExtensions
+      .navigate([`pets/dashboard/add-reminder/${this.petId}`])
+      .then();
   }
 
   onDelete(reminderId: number): void {
@@ -73,19 +56,23 @@ export class RemindersListContainerComponent implements OnInit, OnDestroy {
       message: "Are you sure you want to delete this reminder?",
       cancelButtonText: "Cancel",
       actions: ["Delete"],
-    }).then((result) => {
+    }).then(async (result) => {
       if (result === "Delete") {
         this.remindersFacades
           .deleteReminder(this.petId, reminderId)
-          .pipe(untilDestroyed(this))
+          .pipe(
+            untilDestroyed(this),
+            tap({
+              next: async () => {
+                new Toasty({
+                  text: "Cancelling local notification...",
+                }).show();
+                await this.localNotificationsService.cancel(reminderId);
+              },
+            })
+          )
           .subscribe();
       }
     });
-  }
-
-  onSelect(id: number): void {
-    this.routerExtensions
-      .navigate([`pets/dashboard/reminder/${id}/details`])
-      .then();
   }
 }
