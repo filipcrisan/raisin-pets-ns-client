@@ -70,6 +70,11 @@ export const addExerciseFailure = createAction(
   props<{ error: HttpErrorResponse }>()
 );
 
+export const deleteExerciseSuccess = createAction(
+  "[Pets/API] Delete exercise Success",
+  props<{ exercise: Exercise }>()
+);
+
 export const getAllRemindersSuccess = createAction(
   "[Pets/API] Get all reminders Success",
   props<{ reminders: Reminder[] }>()

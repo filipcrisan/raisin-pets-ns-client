@@ -20,4 +20,10 @@ export class ExercisesService {
       exercise
     );
   }
+
+  deleteExercise(petId: number, exerciseId: number): Observable<Exercise> {
+    return this.http.delete<Exercise>(
+      `${this.apiUrl}/${petId}/exercises/${exerciseId}`
+    );
+  }
 }

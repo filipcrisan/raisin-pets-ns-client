@@ -18,6 +18,8 @@ export const getAllExercises = createAction("[Pets] Get all exercises");
 
 export const addExercise = createAction("[Pets] Add exercise");
 
+export const deleteExercise = createAction("[Pets] Delete exercise");
+
 export const clearExercises = createAction("[Pets] Clear exercises");
 
 export const getAllReminders = createAction("[Pets] Get all reminders");

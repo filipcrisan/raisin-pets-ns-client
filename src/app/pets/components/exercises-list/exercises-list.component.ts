@@ -22,16 +22,23 @@ export class ExercisesListComponent {
   @Input() error: HttpErrorResponse;
 
   @Output() selectExercise = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<number>();
 
   constructor(private page: Page) {}
 
   onActionsTap(id: number): void {
     Menu.popup({
       view: this.page.getViewById("menuButton"),
-      actions: [],
+      actions: [{ id: "1", title: "Delete" }],
       cancelButtonText: "Cancel",
     })
-      .then((action) => {})
+      .then((action) => {
+        if (action.id !== "1") {
+          return;
+        }
+
+        this.delete.emit(id);
+      })
       .catch(console.log);
   }
 

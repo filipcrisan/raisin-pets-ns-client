@@ -9,6 +9,8 @@ import { RouterExtensions } from "@nativescript/angular";
 import { ActivatedRoute } from "@angular/router";
 import { ExercisesFacades } from "../../facades/exercises.facades";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { Dialogs } from "@nativescript/core";
+import { tap } from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -46,6 +48,21 @@ export class ExercisesListContainerComponent implements OnInit, OnDestroy {
     this.routerExtensions
       .navigate([`pets/dashboard/add-exercise/${this.petId}`])
       .then();
+  }
+
+  onDelete(exerciseId: number): void {
+    Dialogs.action({
+      message: "Are you sure you want to delete this exercise?",
+      cancelButtonText: "Cancel",
+      actions: ["Delete"],
+    }).then(async (result) => {
+      if (result === "Delete") {
+        this.exercisesFacades
+          .deleteExercise(this.petId, exerciseId)
+          .pipe(untilDestroyed(this))
+          .subscribe();
+      }
+    });
   }
 
   onSelectExercise(id: number): void {

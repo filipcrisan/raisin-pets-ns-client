@@ -64,6 +64,25 @@ export class ExercisesFacades {
     );
   }
 
+  deleteExercise(petId: number, exerciseId: number): Observable<Exercise> {
+    this.store.dispatch(PetsPageActions.deleteExercise());
+
+    return this.exercisesService.deleteExercise(petId, exerciseId).pipe(
+      tap({
+        next: (exercise) => {
+          this.store.dispatch(
+            PetsApiActions.deleteExerciseSuccess({ exercise })
+          );
+        },
+        error: () => {
+          new Toasty({
+            text: "Error upon deleting exercise. Please try again.",
+          }).show();
+        },
+      })
+    );
+  }
+
   clearExercises(): void {
     this.store.dispatch(PetsPageActions.clearExercises());
   }

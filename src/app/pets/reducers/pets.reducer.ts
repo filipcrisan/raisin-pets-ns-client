@@ -193,7 +193,7 @@ export const reducer = createReducer(
       error: error,
     },
   })),
-  on(PetsPageActions.addExercise, (state) => ({
+  on(PetsPageActions.addExercise, PetsPageActions.deleteExercise, (state) => ({
     ...state,
     exercises: {
       ...state.exercises,
@@ -216,6 +216,15 @@ export const reducer = createReducer(
       ...state.exercises,
       saving: false,
       error: error,
+    },
+  })),
+  on(PetsApiActions.deleteExerciseSuccess, (state, { exercise }) => ({
+    ...state,
+    exercises: {
+      ...state.exercises,
+      entities: state.exercises.entities.filter((x) => x.id !== exercise.id),
+      saving: false,
+      error: null,
     },
   })),
   on(PetsPageActions.clearExercises, (state) => ({

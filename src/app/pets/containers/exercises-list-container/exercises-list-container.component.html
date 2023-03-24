@@ -9,5 +9,6 @@
         [loading]="exercisesQuery.loading$ | async"
         [error]="exercisesQuery.error$ | async"
         (selectExercise)="onSelectExercise($event)"
+        (delete)="onDelete($event)"
     ></app-exercises-list>
 </StackLayout>
