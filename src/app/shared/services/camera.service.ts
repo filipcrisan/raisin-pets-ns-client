@@ -7,7 +7,7 @@ import { ImageSource } from "@nativescript/core";
 })
 export class CameraService {
   requestPermission(): Promise<void> {
-    return camera.requestCameraPermissions();
+    return camera.requestPermissions();
   }
 
   canUseCamera(): boolean {
