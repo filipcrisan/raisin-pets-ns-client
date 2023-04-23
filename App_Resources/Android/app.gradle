@@ -1,6 +1,7 @@
 // You can add your native dependencies here
 dependencies {
-//  implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 }
 
 android {
@@ -9,14 +10,16 @@ android {
   // ndkVersion ""
 
   defaultConfig {
-    minSdkVersion 17
+    minSdkVersion 19
     // targetSdkVersion 32
 
     // Version Information
     versionCode 1
     versionName "1.0.0"
-    
+
     generatedDensities = []
+
+    multiDexEnabled true
   }
 
   aaptOptions {

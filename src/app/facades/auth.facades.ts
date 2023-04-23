@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { HttpErrorResponse } from "@angular/common/http";
 import { AuthService } from "../services/auth.service";
-import { GoogleSignin, User } from "@nativescript/google-signin/index.ios";
+import { GoogleSignin, User } from "@nativescript/google-signin";
 import { RouterExtensions } from "@nativescript/angular";
 import * as appSettings from "@nativescript/core/application-settings";
 import { JwtHelperService } from "nativescript-angular-jwt";
