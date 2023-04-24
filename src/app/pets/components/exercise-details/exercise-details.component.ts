@@ -30,7 +30,11 @@ export class ExerciseDetailsComponent implements OnChanges {
 
   ngOnChanges(changes: NgChanges<ExerciseDetailsComponent>): void {
     if (changes.exercise?.currentValue) {
-      this.vertices = this.exercise.checkpoints?.map((x) => ({
+      const checkpoints = ([...this.exercise.checkpoints] ?? []).sort(
+        (a, b) => a.timestamp.valueOf() - b.timestamp.valueOf()
+      );
+
+      this.vertices = checkpoints.map((x) => ({
         lat: x.latitude,
         lng: x.longitude,
       }));

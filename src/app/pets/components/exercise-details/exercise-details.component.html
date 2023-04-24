@@ -1,8 +1,8 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
     <StackLayout [hidden]="loading">
         <Label textWrap="true" [text]="'#' + exercise.id + ' ' + exercise.name" verticalAlignment="center" class="font-mono text-3xl mr-3"></Label>
-        <Label textWrap="true" [text]="'Total distance: ' + (exercise.totalDistance | number)" verticalAlignment="center" class="font-mono text-xl mr-3"></Label>
-        <Label textWrap="true" [text]="'Average speed: ' + (exercise.averageSpeed | number)" verticalAlignment="center" class="font-mono text-xl mr-3"></Label>
+        <Label textWrap="true" [text]="'Total distance: ' + (exercise.totalDistance | number) + 'km'" verticalAlignment="center" class="font-mono text-xl mr-3"></Label>
+        <Label textWrap="true" [text]="'Average speed: ' + (exercise.averageSpeed | number) + 'km/h'" verticalAlignment="center" class="font-mono text-xl mr-3"></Label>
 
         <MapView (ready)="onMapReady($event)"></MapView>
     </StackLayout>

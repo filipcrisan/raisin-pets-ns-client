@@ -52,7 +52,7 @@ export class GeolocationService {
       result += geolocation.distance(locations[i + 1], locations[i]);
     }
 
-    return result;
+    return result / 1000;
   }
 
   getAverageSpeed(locations: Location[]): number {
@@ -63,6 +63,8 @@ export class GeolocationService {
     let total = 0;
     locations.forEach((x) => (total += x.speed));
 
-    return total / locations.length;
+    let average = total / locations.length;
+    average *= 3.6;
+    return Math.max(0, average);
   }
 }
