@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -19,7 +20,9 @@ import { tap } from "rxjs";
   styleUrls: ["./reminders-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RemindersListContainerComponent implements OnInit, OnDestroy {
+export class RemindersListContainerComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   remindersQuery = this.remindersFacades.query.reminders;
 
   petId!: number;
@@ -31,6 +34,10 @@ export class RemindersListContainerComponent implements OnInit, OnDestroy {
     private remindersFacades: RemindersFacades
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+  }
+
+  ngAfterViewInit(): void {
+    console.log("Reminders list: ", Date.now());
   }
 
   ngOnInit(): void {

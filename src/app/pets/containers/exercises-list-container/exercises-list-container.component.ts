@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -19,7 +20,9 @@ import { tap } from "rxjs";
   styleUrls: ["./exercises-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExercisesListContainerComponent implements OnInit, OnDestroy {
+export class ExercisesListContainerComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   exercisesQuery = this.exercisesFacades.query.exercises;
 
   petId!: number;
@@ -31,6 +34,10 @@ export class ExercisesListContainerComponent implements OnInit, OnDestroy {
     private exercisesFacades: ExercisesFacades
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+  }
+
+  ngAfterViewInit(): void {
+    console.log("Exercises list: ", Date.now());
   }
 
   ngOnInit(): void {

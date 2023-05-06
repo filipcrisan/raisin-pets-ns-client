@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+} from "@angular/core";
 import { PetsFacades } from "../../facades/pets.facades";
 import { ActivatedRoute } from "@angular/router";
 import { TutorialCategory } from "../../models/tutorial-category.model";
@@ -11,7 +16,9 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
   styleUrls: ["./tutorials-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TutorialsListContainerComponent implements OnDestroy {
+export class TutorialsListContainerComponent
+  implements OnDestroy, AfterViewInit
+{
   tutorialsQuery = this.petsFacades.query.tutorials;
 
   petId!: number;
@@ -21,6 +28,10 @@ export class TutorialsListContainerComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+  }
+
+  ngAfterViewInit(): void {
+    console.log("Tutorials list: ", Date.now());
   }
 
   onGetTutorials(category: TutorialCategory): void {
