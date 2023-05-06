@@ -35,10 +35,13 @@ export class TutorialsListContainerComponent
   }
 
   onGetTutorials(category: TutorialCategory): void {
+    console.log("Start list: ", Date.now());
     this.petsFacades
       .getTutorialsByCategory(this.petId, category)
       .pipe(untilDestroyed(this))
-      .subscribe();
+      .subscribe(() => {
+        console.log("End list: ", Date.now());
+      });
   }
 
   // TODO: check if we need the host binder here for forcing this upon leaving the route

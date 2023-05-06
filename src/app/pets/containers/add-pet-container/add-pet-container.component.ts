@@ -27,12 +27,14 @@ export class AddPetContainerComponent {
   ) {}
 
   onAddPet(pet: Pet): void {
+    console.log("Start add: ", Date.now());
     this.petsFacades
       .addPet(pet)
       .pipe(
         untilDestroyed(this),
         tap({
           next: () => {
+            console.log("End add: ", Date.now());
             this.routerExtensions.backToPreviousPage();
           },
         })
