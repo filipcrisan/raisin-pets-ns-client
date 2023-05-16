@@ -1,10 +1,10 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
-    <ScrollView>
+    <ScrollView class="mx-10">
         <StackLayout [hidden]="saving">
             <form [formGroup]="reminderForm">
-                <Label text="Set reminder everyday at" class="font-mono fields"></Label>
+                <Label text="Everyday at" class="font-mono fields"></Label>
                 <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
-                    <TimePicker maxHour="23" maxMinute="59" formControlName="time"></TimePicker>
+                    <TimePicker class="w-20" maxHour="23" maxMinute="59" formControlName="time"></TimePicker>
                 </StackLayout>
                 <Label text="Description" class="font-mono fields"></Label>
                 <TextField formControlName="body" class="font-mono fields"></TextField>
