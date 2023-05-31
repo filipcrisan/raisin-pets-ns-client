@@ -12,7 +12,7 @@ import {
   GoogleMap,
   MapReadyEvent,
 } from "@nativescript/google-maps";
-import { NgChanges } from "../../../shared/models/simple-changes-typed";
+import { NgChanges } from "~/app/shared/models/simple-changes-typed";
 
 @Component({
   selector: "app-exercise-details",
@@ -57,7 +57,8 @@ export class ExerciseDetailsComponent implements OnChanges {
       points: this.vertices,
       tappable: false,
       visible: true,
-      color: "black",
+      color: "#32a1d0",
+      width: 20,
     });
 
     this.map.animateCamera(CameraUpdate.fromCoordinate(this.vertices[0], 20));
