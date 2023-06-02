@@ -58,9 +58,9 @@ export class ExerciseDetailsComponent implements OnChanges {
       tappable: false,
       visible: true,
       color: "#32a1d0",
-      width: 20,
+      width: 10,
     });
 
-    this.map.animateCamera(CameraUpdate.fromCoordinate(this.vertices[0], 20));
+    this.map.animateCamera(CameraUpdate.fromCoordinate(this.vertices[0], 16));
   }
 }
