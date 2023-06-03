@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from "@angular/core";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-add-exercise",
@@ -14,6 +15,8 @@ import {
 })
 export class AddExerciseComponent {
   @Input() watchId: number;
+  @Input() saving: boolean;
+  @Input() error: HttpErrorResponse;
 
   @Output() exerciseChanged = new EventEmitter<void>();
 

@@ -21,6 +21,8 @@ import { RouterExtensions } from "@nativescript/angular";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddExerciseContainerComponent implements OnDestroy {
+  exercisesQuery = this.exercisesFacades.query.exercises;
+
   petId!: number;
   watchId: number = null;
   locations: Location[] = [];

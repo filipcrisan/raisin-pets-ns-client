@@ -1,5 +1,5 @@
 <StackLayout verticalAlignment="center" horizontalAlignment="center" class="bg-landing-page-yellow h-full w-full pt-20">
-    <StackLayout orientation="horizontal" (tap)="onExerciseChanged()" class="rounded-full border-solid border-2 border-black mt-2 h-11">
+    <StackLayout [hidden]="saving || error" orientation="horizontal" (tap)="onExerciseChanged()" class="rounded-full border-solid border-2 border-black mt-2 h-11">
         <ng-container *ngIf="watchId === null else stop">
             <Label text="Start exercise" verticalAlignment="center" class="font-mono text-2xl mx-4"></Label>
         </ng-container>
@@ -7,4 +7,6 @@
             <Label text="Stop exercise" verticalAlignment="center" class="font-mono text-2xl mx-4"></Label>
         </ng-template>
     </StackLayout>
+
+    <ActivityIndicator [busy]="saving || error"></ActivityIndicator>
 </StackLayout>
