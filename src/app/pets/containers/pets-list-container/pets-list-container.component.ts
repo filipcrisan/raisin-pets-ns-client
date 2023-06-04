@@ -4,6 +4,7 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { RouterExtensions } from "@nativescript/angular";
 import { ActivatedRoute } from "@angular/router";
 import { Dialogs } from "@nativescript/core";
+import { distinctUntilChanged, filter, switchMap } from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -22,6 +23,17 @@ export class PetsListContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.petsQuery.loaded$
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        filter((loaded) => !loaded),
+        switchMap(() => this.petsFacades.getAllPets())
+      )
+      .subscribe();
+  }
+
+  onRefreshList(): void {
     this.petsFacades.getAllPets().pipe(untilDestroyed(this)).subscribe();
   }
 

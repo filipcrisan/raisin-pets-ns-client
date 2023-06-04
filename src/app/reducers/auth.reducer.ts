@@ -19,6 +19,7 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
+  on(AuthActions.clearState, () => initialState),
   on(AuthActions.loadUser, (state) => ({
     ...state,
     loading: true,

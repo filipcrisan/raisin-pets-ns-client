@@ -44,6 +44,8 @@ export class AuthFacades {
   }
 
   logout(): void {
+    this.store.dispatch(AuthActions.clearState());
+
     GoogleSignin.signOut()
       .then(() => {
         this.onGoogleSignOut();

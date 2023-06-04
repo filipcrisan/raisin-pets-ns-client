@@ -2,6 +2,8 @@ import { createAction, props } from "@ngrx/store";
 import { HttpErrorResponse } from "@angular/common/http";
 import { User } from "../models/user.model";
 
+export const clearState = createAction("[Auth] Clear state");
+
 export const loadUser = createAction("[Auth] Load user");
 
 export const loadUserSuccess = createAction(

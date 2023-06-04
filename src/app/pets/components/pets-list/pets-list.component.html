@@ -1,5 +1,7 @@
 <StackLayout>
-    <ListView [hidden]="loading || error" [items]="pets" class="h-full">
+    <Label [hidden]="loading || !loaded || error || pets?.length !== 0" horizontalAlignment="center" text="No pets to display." class="font-mono text-2xl p-5"></Label>
+    <Label [hidden]="loading || !error" horizontalAlignment="center" text="Error! Try again." class="font-mono text-2xl p-5"></Label>
+    <ListView [hidden]="loading || !loaded || error" [items]="pets" class="h-full">
         <ng-template let-item="item">
             <DockLayout stretchLastChild="true" class="h-20">
                 <Image [src]="getAvatarUrlOrDefault(item)" class="w-20 h-20 mt-10 mb-10" dock="left" (tap)="onSelectPet(item.id)"></Image>

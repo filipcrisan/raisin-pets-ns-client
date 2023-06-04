@@ -1,5 +1,7 @@
 import { createAction } from "@ngrx/store";
 
+export const clearState = createAction("[Pets] Clear state");
+
 export const getAllPets = createAction("[Pets] Get all pets");
 
 export const addPet = createAction("[Pets] Add pet");

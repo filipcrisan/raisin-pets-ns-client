@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { AuthFacades } from "../../../facades/auth.facades";
 import { RouterExtensions } from "@nativescript/angular";
+import { SharedFacades } from "~/app/pets/facades/shared.facades";
 
 @Component({
   selector: "app-menu-container",
@@ -12,6 +13,7 @@ export class MenuContainerComponent {
   authQuery = this.authFacades.query;
 
   constructor(
+    private sharedFacades: SharedFacades,
     private authFacades: AuthFacades,
     private routerExtensions: RouterExtensions
   ) {}
@@ -21,6 +23,6 @@ export class MenuContainerComponent {
   }
 
   onLogout(): void {
-    this.authFacades.logout();
+    this.sharedFacades.logout();
   }
 }

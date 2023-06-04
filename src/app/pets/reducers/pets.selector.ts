@@ -13,6 +13,11 @@ const getPetsLoading = createSelector(
   (state) => state.pets.loading
 );
 
+const getPetsLoaded = createSelector(
+  getPetsState,
+  (state) => state.pets.loaded
+);
+
 const getPetsError = createSelector(getPetsState, (state) => state.pets.error);
 
 const getPetsSaving = createSelector(
@@ -78,6 +83,7 @@ const getRemindersSaving = createSelector(
 export const petsQuery = {
   getPets,
   getPetsLoading,
+  getPetsLoaded,
   getPetsError,
   getPetsSaving,
   getTutorials,
