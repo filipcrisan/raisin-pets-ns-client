@@ -11,7 +11,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ExercisesFacades } from "../../facades/exercises.facades";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { Dialogs } from "@nativescript/core";
-import { tap } from "rxjs";
+import { distinctUntilChanged, filter, switchMap, tap } from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -41,6 +41,17 @@ export class ExercisesListContainerComponent
   }
 
   ngOnInit(): void {
+    this.exercisesQuery.loaded$
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        filter((loaded) => !loaded),
+        switchMap(() => this.exercisesFacades.getAllExercises(this.petId))
+      )
+      .subscribe();
+  }
+
+  onRefreshList(): void {
     this.exercisesFacades
       .getAllExercises(this.petId)
       .pipe(untilDestroyed(this))

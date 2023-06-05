@@ -24,6 +24,7 @@ export interface State {
   exercises: {
     entities: Exercise[];
     loading: boolean;
+    loaded: boolean;
     saving: boolean;
     error: HttpErrorResponse;
   };
@@ -51,6 +52,7 @@ export const initialState: State = {
   exercises: {
     entities: [],
     loading: false,
+    loaded: false,
     saving: false,
     error: null,
   },
@@ -165,7 +167,7 @@ export const reducer = createReducer(
       error: null,
     },
   })),
-  on(PetsApiActions.getAllPetsFailure, (state, { error }) => ({
+  on(PetsApiActions.getTutorialsByCategoryFailure, (state, { error }) => ({
     ...state,
     tutorials: {
       ...state.tutorials,
@@ -187,6 +189,7 @@ export const reducer = createReducer(
       ...state.exercises,
       entities: exercises,
       loading: false,
+      loaded: true,
       error: null,
     },
   })),
@@ -195,6 +198,7 @@ export const reducer = createReducer(
     exercises: {
       ...state.exercises,
       loading: false,
+      loaded: false,
       error: error,
     },
   })),

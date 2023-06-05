@@ -3,10 +3,12 @@
         <Image src="~/assets/icons/plus.png"  class="w-9 h-9 mr-2 ml-3"></Image>
         <Label text="Add exercise session" verticalAlignment="center" class="font-mono mr-3"></Label>
     </StackLayout>
+    <Image (tap)="onRefreshList()" src="https://img.icons8.com/dusk/64/replay.png" class="w-9 h-9 my-4"></Image>
 
     <app-exercises-list
         [exercises]="exercisesQuery.entities$ | async"
         [loading]="exercisesQuery.loading$ | async"
+        [loaded]="exercisesQuery.loaded$ | async"
         [error]="exercisesQuery.error$ | async"
         (selectExercise)="onSelectExercise($event)"
         (delete)="onDelete($event)"

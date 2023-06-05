@@ -19,6 +19,7 @@ import { Page } from "@nativescript/core";
 export class ExercisesListComponent {
   @Input() exercises: Exercise[];
   @Input() loading: boolean;
+  @Input() loaded: boolean;
   @Input() error: HttpErrorResponse;
 
   @Output() selectExercise = new EventEmitter<number>();

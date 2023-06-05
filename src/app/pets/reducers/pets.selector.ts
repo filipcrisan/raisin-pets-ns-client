@@ -50,6 +50,11 @@ const getExercisesLoading = createSelector(
   (state) => state.exercises.loading
 );
 
+const getExercisesLoaded = createSelector(
+  getPetsState,
+  (state) => state.exercises.loaded
+);
+
 const getExercisesError = createSelector(
   getPetsState,
   (state) => state.exercises.error
@@ -91,6 +96,7 @@ export const petsQuery = {
   getTutorialsError,
   getExercises,
   getExercisesLoading,
+  getExercisesLoaded,
   getExercisesError,
   getExercisesSaving,
   getReminders,

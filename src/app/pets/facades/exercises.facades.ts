@@ -14,6 +14,7 @@ export class ExercisesFacades {
     exercises: {
       entities$: this.store.select(petsQuery.getExercises),
       loading$: this.store.select(petsQuery.getExercisesLoading),
+      loaded$: this.store.select(petsQuery.getExercisesLoaded),
       error$: this.store.select(petsQuery.getExercisesError),
       saving$: this.store.select(petsQuery.getExercisesSaving),
     },
