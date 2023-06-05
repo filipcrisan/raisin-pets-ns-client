@@ -3,10 +3,12 @@
         <Image src="~/assets/icons/plus.png"  class="w-9 h-9 mr-2 ml-3"></Image>
         <Label text="Add reminder" verticalAlignment="center" class="font-mono mr-3"></Label>
     </StackLayout>
+    <Image (tap)="onRefreshList()" src="https://img.icons8.com/dusk/64/replay.png" class="w-9 h-9 my-4"></Image>
 
     <app-reminders-list
         [reminders]="remindersQuery.entities$ | async"
         [loading]="remindersQuery.loading$ | async"
+        [loaded]="remindersQuery.loaded$ | async"
         [error]="remindersQuery.error$ | async"
         (delete)="onDelete($event)"
     ></app-reminders-list>

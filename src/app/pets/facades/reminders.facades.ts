@@ -14,6 +14,7 @@ export class RemindersFacades {
     reminders: {
       entities$: this.store.select(petsQuery.getReminders),
       loading$: this.store.select(petsQuery.getRemindersLoading),
+      loaded$: this.store.select(petsQuery.getRemindersLoaded),
       error$: this.store.select(petsQuery.getRemindersError),
       saving$: this.store.select(petsQuery.getRemindersSaving),
     },

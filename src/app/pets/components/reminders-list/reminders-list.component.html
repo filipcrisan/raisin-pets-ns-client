@@ -1,7 +1,7 @@
 <StackLayout>
-    <Label [hidden]="loading || error || reminders?.length !== 0" textWrap="true" text="No reminders yet." class="font-mono text-2xl text-center p-5"></Label>
+    <Label [hidden]="loading || !loaded || error || reminders?.length !== 0" textWrap="true" text="No reminders yet." class="font-mono text-2xl text-center p-5"></Label>
     <Label [hidden]="loading || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
-    <ListView [hidden]="loading || error" [items]="reminders" class="h-full">
+    <ListView [hidden]="loading || !loaded || error" [items]="reminders" class="h-full">
         <ng-template let-item="item">
             <DockLayout stretchLastChild="true">
                 <StackLayout orientation="horizontal" class="w-72">

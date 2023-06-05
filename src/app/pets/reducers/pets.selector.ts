@@ -75,6 +75,11 @@ const getRemindersLoading = createSelector(
   (state) => state.reminders.loading
 );
 
+const getRemindersLoaded = createSelector(
+  getPetsState,
+  (state) => state.reminders.loaded
+);
+
 const getRemindersError = createSelector(
   getPetsState,
   (state) => state.reminders.error
@@ -101,6 +106,7 @@ export const petsQuery = {
   getExercisesSaving,
   getReminders,
   getRemindersLoading,
+  getRemindersLoaded,
   getRemindersError,
   getRemindersSaving,
 };

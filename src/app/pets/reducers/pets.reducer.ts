@@ -31,6 +31,7 @@ export interface State {
   reminders: {
     entities: Reminder[];
     loading: boolean;
+    loaded: boolean;
     saving: boolean;
     error: HttpErrorResponse;
   };
@@ -59,6 +60,7 @@ export const initialState: State = {
   reminders: {
     entities: [],
     loading: false,
+    loaded: false,
     saving: false,
     error: null,
   },
@@ -254,6 +256,7 @@ export const reducer = createReducer(
       ...state.reminders,
       entities: reminders,
       loading: false,
+      loaded: true,
       error: null,
     },
   })),
@@ -262,6 +265,7 @@ export const reducer = createReducer(
     reminders: {
       ...state.reminders,
       loading: false,
+      loaded: false,
       error: error,
     },
   })),

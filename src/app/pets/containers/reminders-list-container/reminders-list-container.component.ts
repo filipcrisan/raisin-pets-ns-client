@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  HostListener,
   OnDestroy,
   OnInit,
 } from "@angular/core";
@@ -11,7 +12,7 @@ import { ActivatedRoute } from "@angular/router";
 import { RemindersFacades } from "../../facades/reminders.facades";
 import { Dialogs } from "@nativescript/core";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { tap } from "rxjs";
+import { distinctUntilChanged, filter, switchMap, tap } from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -20,7 +21,9 @@ import { tap } from "rxjs";
   styleUrls: ["./reminders-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RemindersListContainerComponent implements OnInit, AfterViewInit {
+export class RemindersListContainerComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   remindersQuery = this.remindersFacades.query.reminders;
 
   petId!: number;
@@ -39,6 +42,22 @@ export class RemindersListContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.remindersQuery.loaded$
+      .pipe(
+        untilDestroyed(this),
+        distinctUntilChanged(),
+        filter((loaded) => !loaded),
+        switchMap(() => this.remindersFacades.getAllReminders(this.petId))
+      )
+      .subscribe();
+  }
+
+  @HostListener("unloaded")
+  ngOnDestroy() {
+    // we need this in order to destroy the subscription from ngOnInit
+  }
+
+  onRefreshList(): void {
     this.remindersFacades
       .getAllReminders(this.petId)
       .pipe(untilDestroyed(this))

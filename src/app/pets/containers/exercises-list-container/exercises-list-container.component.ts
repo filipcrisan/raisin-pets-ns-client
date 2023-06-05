@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  HostListener,
   OnDestroy,
   OnInit,
 } from "@angular/core";
@@ -20,7 +21,9 @@ import { distinctUntilChanged, filter, switchMap, tap } from "rxjs";
   styleUrls: ["./exercises-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExercisesListContainerComponent implements OnInit, AfterViewInit {
+export class ExercisesListContainerComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   exercisesQuery = this.exercisesFacades.query.exercises;
 
   petId!: number;
@@ -47,6 +50,11 @@ export class ExercisesListContainerComponent implements OnInit, AfterViewInit {
         switchMap(() => this.exercisesFacades.getAllExercises(this.petId))
       )
       .subscribe();
+  }
+
+  @HostListener("unloaded")
+  ngOnDestroy() {
+    // we need this in order to destroy the subscription from ngOnInit
   }
 
   onRefreshList(): void {
