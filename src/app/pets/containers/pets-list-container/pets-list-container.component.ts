@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { PetsFacades } from "../../facades/pets.facades";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { RouterExtensions } from "@nativescript/angular";
@@ -13,7 +19,7 @@ import { distinctUntilChanged, filter, switchMap } from "rxjs";
   styleUrls: ["./pets-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PetsListContainerComponent implements OnInit {
+export class PetsListContainerComponent implements OnInit, OnDestroy {
   petsQuery = this.petsFacades.query.pets;
 
   constructor(
@@ -21,6 +27,11 @@ export class PetsListContainerComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private routerExtensions: RouterExtensions
   ) {}
+
+  @HostListener("unloaded")
+  ngOnDestroy() {
+    // we need this in order to destroy the subscription from ngOnInit
+  }
 
   ngOnInit(): void {
     this.petsQuery.loaded$

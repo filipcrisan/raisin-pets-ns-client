@@ -1,9 +1,10 @@
 <StackLayout>
-    <Label [hidden]="loading || error || reminders?.length !== 0" text="No reminders to display." class="font-mono fields p-5"></Label>
+    <Label [hidden]="loading || error || reminders?.length !== 0" textWrap="true" text="No reminders yet." class="font-mono text-2xl text-center p-5"></Label>
+    <Label [hidden]="loading || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
     <ListView [hidden]="loading || error" [items]="reminders" class="h-full">
         <ng-template let-item="item">
             <DockLayout stretchLastChild="true">
-                <StackLayout orientation="horizontal" (tap)="onSelectExercise(item.id)" class="w-72">
+                <StackLayout orientation="horizontal" class="w-72">
                     <Label>
                         <FormattedString>
                             <Span [text]="(item.hours | number:'2.0') + ':' + (item.minutes | number:'2.0')" class="font-mono text-2xl"></Span>

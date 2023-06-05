@@ -10,8 +10,9 @@
     </DropDown>
   </StackLayout>
 
-  <Label textWrap="true" text="These tutorials may be useful:" class="font-mono fields"></Label>
-  <Label [hidden]="loading || error || tutorials?.length !== 0" text="No tutorials to display." class="font-mono fields p-5"></Label>
+  <Label [hidden]="tutorials?.length === 0" textWrap="true" text="These tutorials may be useful:" class="font-mono fields"></Label>
+  <Label [hidden]="loading || error || tutorials?.length !== 0" textWrap="true" text="No tutorials yet." class="font-mono text-2xl text-center p-5"></Label>
+  <Label [hidden]="loading || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
   <ListView [hidden]="loading || error" [items]="tutorials" class="h-full">
     <ng-template let-item="item">
       <DockLayout stretchLastChild="true" (tap)="onTapItem(item)">

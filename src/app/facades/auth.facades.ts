@@ -44,8 +44,6 @@ export class AuthFacades {
   }
 
   logout(): void {
-    this.store.dispatch(AuthActions.clearState());
-
     GoogleSignin.signOut()
       .then(() => {
         this.onGoogleSignOut();
@@ -131,9 +129,11 @@ export class AuthFacades {
         next: () => {
           appSettings.remove("token");
           this.routerExtensions.navigate([""], { clearHistory: true }).then();
+          this.store.dispatch(AuthActions.clearState());
         },
         error: () => {
           appSettings.remove("token");
+          this.store.dispatch(AuthActions.clearState());
 
           new Toasty({
             text: "Error upon logout. Please try again.",

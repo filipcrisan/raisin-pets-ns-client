@@ -6,7 +6,7 @@
   <FlexboxLayout flexDirection="column" justifyContent="center" alignItems="center" class="h-full pb-5">
     <Label textWrap="true" class="text-center" [hidden]="(authQuery.userLoading$ | async) || (authQuery.userError$ | async) !== null">
       <FormattedString>
-        <Span [text]="'Goodbye, ' + (authQuery.user$ | async).firstName + '!'" class="font-mono text-xl"></Span>
+        <Span [text]="'Goodbye, ' + (authQuery.user$ | async)?.firstName + '!'" class="font-mono text-xl"></Span>
       </FormattedString>
     </Label>
     <StackLayout orientation="horizontal" (tap)="onLogout()" class="rounded-full border-solid border-2 border-black mt-2 w-32 h-11">
