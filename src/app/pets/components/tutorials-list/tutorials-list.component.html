@@ -1,5 +1,5 @@
-<StackLayout class="flex flex-col justify-center items-center bg-landing-page-yellow w-full h-full pt-20">
-  <Label text="Choose category" class="font-mono fields"></Label>
+<StackLayout class="flex flex-col justify-center items-center bg-landing-page-yellow w-full h-full pt-20 px-5">
+  <Label text="Choose category" class="font-mono text-center fields"></Label>
   <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
     <DropDown
             [(ngModel)]="selectedCategoryIndex"
@@ -10,18 +10,26 @@
     </DropDown>
   </StackLayout>
 
-  <Label [hidden]="tutorials?.length === 0" textWrap="true" text="These tutorials may be useful:" class="font-mono fields"></Label>
+  <Label [hidden]="tutorials?.length === 0" textWrap="true" text="These tutorials may be useful:" class="font-mono text-center fields"></Label>
   <Label [hidden]="loading || error || tutorials?.length !== 0" textWrap="true" text="No tutorials yet." class="font-mono text-2xl text-center p-5"></Label>
   <Label [hidden]="loading || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
-  <ListView [hidden]="loading || error" [items]="tutorials" class="h-full">
-    <ng-template let-item="item">
-      <DockLayout stretchLastChild="true" (tap)="onTapItem(item)">
-        <Label textWrap="true" class="text-left" dock="left" [text]="item.name"></Label>
-        <StackLayout>
-          <Label textWrap="true" class="text-left" text="{{Size[item.size]}} sized {{Species[item.species]}}"></Label>
-          <Label textWrap="true" class="text-left" text="{{item.minAgeInYears}}-{{item.maxAgeInYears}} years old"></Label>
+  <ListView [items]="tutorialListItems" class="flex flex-row justify-between items-center">
+    <ng-template let-tutorialListItem="item" let-i="index" let-tutorial="item.tutorial">
+      <StackLayout orientation="vertical" (tap)="onTutorialTap(i)" class="accordion">
+        <FlexboxLayout backgroundColor="White" flexDirection="row" justifyContent="space-between">
+          <Label class="truncate" [text]="tutorial.name"></Label>
+          <StackLayout orientation="vertical" class="flex flex-col justify-center">
+            <Label [text]="Size[tutorial.size] + ' sized ' + Species[tutorial.species]"></Label>
+            <Label [text]="tutorial.minAgeInYears + '-' + tutorial.maxAgeInYears + ' years old'"></Label>
+          </StackLayout>
+          <Image [hidden]="!tutorialListItem.expanded" src="https://img.icons8.com/ios/50/collapse-arrow--v1.png" class="w-3.5 h-3.5 mr-1"></Image>
+          <Image [hidden]="tutorialListItem.expanded" src="~/assets/icons/collapse-arrow.png" class="w-3.5 h-3.5 mr-1"></Image>
+        </FlexboxLayout>
+        <StackLayout backgroundColor="White" [hidden]="!tutorialListItem.expanded">
+          <Label textWrap="true" [text]="'Frequency: ' + tutorial.frequency"></Label>
+          <Label textWrap="true" [text]="'Description: ' + tutorial.content"></Label>
         </StackLayout>
-      </DockLayout>
+      </StackLayout>
     </ng-template>
   </ListView>
 

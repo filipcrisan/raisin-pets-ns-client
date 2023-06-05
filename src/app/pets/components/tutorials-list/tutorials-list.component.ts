@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
 } from "@angular/core";
@@ -15,7 +17,8 @@ import { distinctUntilChanged, filter } from "rxjs";
 import { Species } from "../../models/species.model";
 import { Size } from "../../models/size.model";
 import { SelectedIndexChangedEventData } from "nativescript-drop-down";
-import { Dialogs } from "@nativescript/core";
+import { NgChanges } from "~/app/shared/models/simple-changes-typed";
+import { TutorialListItem } from "~/app/pets/models/tutorial-list-item.model";
 
 @UntilDestroy()
 @Component({
@@ -24,7 +27,7 @@ import { Dialogs } from "@nativescript/core";
   styleUrls: ["./tutorials-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TutorialsListComponent implements OnInit {
+export class TutorialsListComponent implements OnInit, OnChanges {
   @Input() tutorials: Tutorial[];
   @Input() loading: boolean;
   @Input() error: HttpErrorResponse;
@@ -40,6 +43,19 @@ export class TutorialsListComponent implements OnInit {
 
   Species = Species;
   Size = Size;
+
+  tutorialListItems: TutorialListItem[];
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnChanges(changes: NgChanges<TutorialsListComponent>) {
+    if (changes.tutorials?.currentValue) {
+      this.tutorialListItems = this.tutorials.map((x) => ({
+        tutorial: x,
+        expanded: false,
+      }));
+    }
+  }
 
   ngOnInit() {
     this.getTutorials.emit(this.tutorialsForm.controls.category.value);
@@ -59,11 +75,10 @@ export class TutorialsListComponent implements OnInit {
     this.tutorialsForm.controls.category.setValue(args.newIndex + 1);
   }
 
-  onTapItem(item: Tutorial): void {
-    Dialogs.confirm({
-      title: "Tutorial details",
-      message: `Name: ${item.name}\nFrequency: ${item.frequency}\nDescription: ${item.content}`,
-      cancelButtonText: "Close",
-    }).then();
+  onTutorialTap(index: number): void {
+    this.tutorialListItems = this.tutorialListItems.map((listItem, i) => ({
+      ...listItem,
+      expanded: i === index ? !listItem.expanded : false,
+    }));
   }
 }
