@@ -83,8 +83,4 @@ export class ExercisesFacades {
       })
     );
   }
-
-  clearExercises(): void {
-    this.store.dispatch(PetsPageActions.clearExercises());
-  }
 }

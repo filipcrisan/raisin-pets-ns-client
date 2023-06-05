@@ -20,9 +20,7 @@ import { tap } from "rxjs";
   styleUrls: ["./reminders-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RemindersListContainerComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class RemindersListContainerComponent implements OnInit, AfterViewInit {
   remindersQuery = this.remindersFacades.query.reminders;
 
   petId!: number;
@@ -45,10 +43,6 @@ export class RemindersListContainerComponent
       .getAllReminders(this.petId)
       .pipe(untilDestroyed(this))
       .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.remindersFacades.clearReminders();
   }
 
   onAddReminder(): void {

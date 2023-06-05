@@ -133,8 +133,4 @@ export class PetsFacades {
       })
     );
   }
-
-  clearTutorials(): void {
-    this.store.dispatch(PetsPageActions.clearTutorials());
-  }
 }

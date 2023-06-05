@@ -2,9 +2,13 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "@nativescript/angular";
+import { SharedFacades } from "~/app/pets/facades/shared.facades";
 
 @Component({
   selector: "app-pet-menu-container",
@@ -12,10 +16,13 @@ import { RouterExtensions } from "@nativescript/angular";
   styleUrls: ["./pet-menu-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PetMenuContainerComponent implements AfterViewInit {
+export class PetMenuContainerComponent
+  implements AfterViewInit, OnInit, OnDestroy
+{
   petId!: number;
 
   constructor(
+    private sharedFacades: SharedFacades,
     private activatedRoute: ActivatedRoute,
     private routerExtensions: RouterExtensions
   ) {
@@ -24,6 +31,15 @@ export class PetMenuContainerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log("Menu: ", Date.now());
+  }
+
+  ngOnInit() {
+    this.sharedFacades.clearPetDetails();
+  }
+
+  @HostListener("unloaded")
+  ngOnDestroy() {
+    // we need this in order to destroy the component every time we navigate away (for now)
   }
 
   onGoToTutorials(): void {

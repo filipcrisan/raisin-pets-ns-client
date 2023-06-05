@@ -13,4 +13,10 @@ export class SharedFacades {
 
     this.authFacades.logout();
   }
+
+  clearPetDetails(): void {
+    this.store.dispatch(PetsPageActions.clearTutorials());
+    this.store.dispatch(PetsPageActions.clearExercises());
+    this.store.dispatch(PetsPageActions.clearReminders());
+  }
 }

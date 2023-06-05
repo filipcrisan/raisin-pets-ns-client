@@ -16,9 +16,7 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
   styleUrls: ["./tutorials-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TutorialsListContainerComponent
-  implements OnDestroy, AfterViewInit
-{
+export class TutorialsListContainerComponent implements AfterViewInit {
   tutorialsQuery = this.petsFacades.query.tutorials;
 
   petId!: number;
@@ -42,10 +40,5 @@ export class TutorialsListContainerComponent
       .subscribe(() => {
         console.log("End list: ", Date.now());
       });
-  }
-
-  // TODO: check if we need the host binder here for forcing this upon leaving the route
-  ngOnDestroy(): void {
-    this.petsFacades.clearTutorials();
   }
 }

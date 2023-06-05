@@ -20,9 +20,7 @@ import { distinctUntilChanged, filter, switchMap, tap } from "rxjs";
   styleUrls: ["./exercises-list-container.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExercisesListContainerComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class ExercisesListContainerComponent implements OnInit, AfterViewInit {
   exercisesQuery = this.exercisesFacades.query.exercises;
 
   petId!: number;
@@ -56,10 +54,6 @@ export class ExercisesListContainerComponent
       .getAllExercises(this.petId)
       .pipe(untilDestroyed(this))
       .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.exercisesFacades.clearExercises();
   }
 
   onAddExercise(): void {
