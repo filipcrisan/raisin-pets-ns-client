@@ -10,15 +10,15 @@ import { Reminder } from "../models/reminder.model";
 
 @Injectable()
 export class RemindersFacades {
-  query = {
+  query = (petId: number) => ({
     reminders: {
-      entities$: this.store.select(petsQuery.getReminders),
-      loading$: this.store.select(petsQuery.getRemindersLoading),
-      loaded$: this.store.select(petsQuery.getRemindersLoaded),
-      error$: this.store.select(petsQuery.getRemindersError),
-      saving$: this.store.select(petsQuery.getRemindersSaving),
+      entities$: this.store.select(petsQuery.getReminders(petId)),
+      loading$: this.store.select(petsQuery.getRemindersLoading(petId)),
+      loaded$: this.store.select(petsQuery.getRemindersLoaded(petId)),
+      error$: this.store.select(petsQuery.getRemindersError(petId)),
+      saving$: this.store.select(petsQuery.getRemindersSaving(petId)),
     },
-  };
+  });
 
   constructor(
     private store: Store,
@@ -26,13 +26,13 @@ export class RemindersFacades {
   ) {}
 
   getAllReminders(petId: number): Observable<Reminder[]> {
-    this.store.dispatch(PetsPageActions.getAllReminders());
+    this.store.dispatch(PetsPageActions.getAllReminders({ petId }));
 
     return this.remindersService.getAllReminders(petId).pipe(
       tap({
         next: (reminders) => {
           this.store.dispatch(
-            PetsApiActions.getAllRemindersSuccess({ reminders })
+            PetsApiActions.getAllRemindersSuccess({ petId, reminders })
           );
         },
         error: (error: HttpErrorResponse) => {
@@ -40,14 +40,16 @@ export class RemindersFacades {
             text: "Error upon fetching reminders. Please try again.",
           }).show();
 
-          this.store.dispatch(PetsApiActions.getAllRemindersFailure({ error }));
+          this.store.dispatch(
+            PetsApiActions.getAllRemindersFailure({ petId, error })
+          );
         },
       })
     );
   }
 
   addReminder(reminder: Reminder): Observable<Reminder> {
-    this.store.dispatch(PetsPageActions.addReminder());
+    this.store.dispatch(PetsPageActions.addReminder({ petId: reminder.petId }));
 
     return this.remindersService.addReminder(reminder).pipe(
       tap({
@@ -59,14 +61,16 @@ export class RemindersFacades {
             text: "Error upon adding reminder. Please try again.",
           }).show();
 
-          this.store.dispatch(PetsApiActions.addReminderFailure({ error }));
+          this.store.dispatch(
+            PetsApiActions.addReminderFailure({ petId: reminder.petId, error })
+          );
         },
       })
     );
   }
 
   deleteReminder(petId: number, reminderId: number): Observable<Reminder> {
-    this.store.dispatch(PetsPageActions.deleteReminder());
+    this.store.dispatch(PetsPageActions.deleteReminder({ petId }));
 
     return this.remindersService.deleteReminder(petId, reminderId).pipe(
       tap({

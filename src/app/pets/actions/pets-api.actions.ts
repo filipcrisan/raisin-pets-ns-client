@@ -77,12 +77,12 @@ export const deleteExerciseSuccess = createAction(
 
 export const getAllRemindersSuccess = createAction(
   "[Pets/API] Get all reminders Success",
-  props<{ reminders: Reminder[] }>()
+  props<{ petId: number; reminders: Reminder[] }>()
 );
 
 export const getAllRemindersFailure = createAction(
   "[Pets/API] Get all reminders Failure",
-  props<{ error: HttpErrorResponse }>()
+  props<{ petId: number; error: HttpErrorResponse }>()
 );
 
 export const addReminderSuccess = createAction(
@@ -92,7 +92,7 @@ export const addReminderSuccess = createAction(
 
 export const addReminderFailure = createAction(
   "[Pets/API] Add reminder Failure",
-  props<{ error: HttpErrorResponse }>()
+  props<{ petId: number; error: HttpErrorResponse }>()
 );
 
 export const deleteReminderSuccess = createAction(

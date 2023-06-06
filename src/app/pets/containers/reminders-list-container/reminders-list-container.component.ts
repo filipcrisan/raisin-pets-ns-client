@@ -24,7 +24,7 @@ import { distinctUntilChanged, filter, switchMap, tap } from "rxjs";
 export class RemindersListContainerComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  remindersQuery = this.remindersFacades.query.reminders;
+  remindersQuery: any;
 
   petId!: number;
 
@@ -35,6 +35,7 @@ export class RemindersListContainerComponent
     private remindersFacades: RemindersFacades
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+    this.remindersQuery = this.remindersFacades.query(this.petId).reminders;
   }
 
   ngAfterViewInit(): void {

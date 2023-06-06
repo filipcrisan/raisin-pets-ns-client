@@ -14,8 +14,6 @@ export const getTutorialsByCategory = createAction(
   "[Pets] Get tutorials by category"
 );
 
-export const clearTutorials = createAction("[Pets] Clear tutorials");
-
 export const getAllExercises = createAction(
   "[Pets] Get all exercises",
   props<{ petId: number }>()
@@ -31,12 +29,17 @@ export const deleteExercise = createAction(
   props<{ petId: number }>()
 );
 
-export const clearExercises = createAction("[Pets] Clear exercises");
+export const getAllReminders = createAction(
+  "[Pets] Get all reminders",
+  props<{ petId: number }>()
+);
 
-export const getAllReminders = createAction("[Pets] Get all reminders");
+export const addReminder = createAction(
+  "[Pets] Add reminder",
+  props<{ petId: number }>()
+);
 
-export const addReminder = createAction("[Pets] Add reminder");
-
-export const deleteReminder = createAction("[Pets] Delete reminder");
-
-export const clearReminders = createAction("[Pets] Clear reminders");
+export const deleteReminder = createAction(
+  "[Pets] Delete reminder",
+  props<{ petId: number }>()
+);

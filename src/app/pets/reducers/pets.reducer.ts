@@ -3,11 +3,14 @@ import { Pet } from "../models/pet.model";
 import { PetsApiActions, PetsPageActions } from "../actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Tutorial } from "../models/tutorial.model";
-import { Reminder } from "../models/reminder.model";
 import {
   defaultExercisesOfPetState,
   ExercisesOfPetStateType,
 } from "../models/exercises-of-pet-state-type.model";
+import {
+  defaultRemindersOfPetState,
+  RemindersOfPetStateType,
+} from "../models/reminders-of-pet-state-type.model";
 
 export const featureKey = "pets";
 
@@ -25,13 +28,7 @@ export interface State {
     error: HttpErrorResponse;
   };
   exercises: Map<number, ExercisesOfPetStateType>;
-  reminders: {
-    entities: Reminder[];
-    loading: boolean;
-    loaded: boolean;
-    saving: boolean;
-    error: HttpErrorResponse;
-  };
+  reminders: Map<number, RemindersOfPetStateType>;
 }
 
 export const initialState: State = {
@@ -48,13 +45,7 @@ export const initialState: State = {
     error: null,
   },
   exercises: new Map<number, ExercisesOfPetStateType>(),
-  reminders: {
-    entities: [],
-    loading: false,
-    loaded: false,
-    saving: false,
-    error: null,
-  },
+  reminders: new Map<number, RemindersOfPetStateType>(),
 };
 
 export const reducer = createReducer(
@@ -71,6 +62,7 @@ export const reducer = createReducer(
   on(PetsApiActions.getAllPetsSuccess, (state, { pets }) => {
     pets.forEach((pet) => {
       state.exercises.set(pet.id, { ...defaultExercisesOfPetState });
+      state.reminders.set(pet.id, { ...defaultRemindersOfPetState });
     });
 
     return {
@@ -93,6 +85,7 @@ export const reducer = createReducer(
       error: error,
     },
     exercises: new Map<number, ExercisesOfPetStateType>(),
+    reminders: new Map<number, RemindersOfPetStateType>(),
   })),
   on(
     PetsPageActions.addPet,
@@ -138,7 +131,6 @@ export const reducer = createReducer(
     },
   })),
   on(PetsApiActions.deletePetSuccess, (state, { pet }) => ({
-    // TODO: check if pet details should be erased here
     ...state,
     pets: {
       ...state.pets,
@@ -154,10 +146,6 @@ export const reducer = createReducer(
       loading: true,
       error: null,
     },
-  })),
-  on(PetsPageActions.clearTutorials, (state) => ({
-    ...state,
-    tutorials: initialState.tutorials,
   })),
   on(PetsApiActions.getTutorialsByCategorySuccess, (state, { tutorials }) => ({
     ...state,
@@ -282,75 +270,112 @@ export const reducer = createReducer(
 
     return { ...state };
   }),
-  on(PetsPageActions.clearExercises, (state) => ({
-    ...state,
-    exercises: initialState.exercises,
-  })),
-  on(PetsPageActions.getAllReminders, (state) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
+  on(PetsPageActions.getAllReminders, (state, { petId }) => {
+    let remindersOfPet = getRemindersOfPetOrDefault(state.reminders, petId);
+
+    remindersOfPet = {
+      ...remindersOfPet,
       loading: true,
       error: null,
-    },
-  })),
-  on(PetsApiActions.getAllRemindersSuccess, (state, { reminders }) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
+    };
+
+    state.reminders.set(petId, remindersOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.getAllRemindersSuccess, (state, { petId, reminders }) => {
+    let remindersOfPet = getRemindersOfPetOrDefault(state.reminders, petId);
+
+    remindersOfPet = {
+      ...remindersOfPet,
       entities: reminders,
       loading: false,
       loaded: true,
       error: null,
-    },
-  })),
-  on(PetsApiActions.getAllRemindersFailure, (state, { error }) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
+    };
+
+    state.reminders.set(petId, remindersOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.getAllRemindersFailure, (state, { petId, error }) => {
+    let remindersOfPet = getRemindersOfPetOrDefault(state.reminders, petId);
+
+    remindersOfPet = {
+      ...remindersOfPet,
       loading: false,
       loaded: false,
       error: error,
-    },
-  })),
-  on(PetsPageActions.addReminder, PetsPageActions.deleteReminder, (state) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
-      saving: true,
-      error: null,
-    },
-  })),
-  on(PetsApiActions.addReminderSuccess, (state, { reminder }) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
-      entities: [...state.reminders.entities, reminder],
+    };
+
+    state.reminders.set(petId, remindersOfPet);
+
+    return { ...state };
+  }),
+  on(
+    PetsPageActions.addReminder,
+    PetsPageActions.deleteReminder,
+    (state, { petId }) => {
+      let remindersOfPet = getRemindersOfPetOrDefault(state.reminders, petId);
+
+      remindersOfPet = {
+        ...remindersOfPet,
+        saving: true,
+        error: null,
+      };
+
+      state.reminders.set(petId, remindersOfPet);
+
+      return { ...state };
+    }
+  ),
+  on(PetsApiActions.addReminderSuccess, (state, { reminder }) => {
+    let remindersOfPet = getRemindersOfPetOrDefault(
+      state.reminders,
+      reminder.petId
+    );
+
+    remindersOfPet = {
+      ...remindersOfPet,
+      entities: [...remindersOfPet.entities, reminder],
       saving: false,
       error: null,
-    },
-  })),
-  on(PetsApiActions.addReminderFailure, (state, { error }) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
+    };
+
+    state.reminders.set(reminder.petId, remindersOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.addReminderFailure, (state, { petId, error }) => {
+    let remindersOfPet = getRemindersOfPetOrDefault(state.reminders, petId);
+
+    remindersOfPet = {
+      ...remindersOfPet,
       saving: false,
       error: error,
-    },
-  })),
-  on(PetsApiActions.deleteReminderSuccess, (state, { reminder }) => ({
-    ...state,
-    reminders: {
-      ...state.reminders,
-      entities: state.reminders.entities.filter((x) => x.id !== reminder.id),
+    };
+
+    state.reminders.set(petId, remindersOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.deleteReminderSuccess, (state, { reminder }) => {
+    let remindersOfPet = getRemindersOfPetOrDefault(
+      state.reminders,
+      reminder.petId
+    );
+
+    remindersOfPet = {
+      ...remindersOfPet,
+      entities: remindersOfPet.entities.filter((x) => x.id !== reminder.id),
       saving: false,
       error: null,
-    },
-  })),
-  on(PetsPageActions.clearReminders, (state) => ({
-    ...state,
-    reminders: initialState.reminders,
-  }))
+    };
+
+    state.reminders.set(reminder.petId, remindersOfPet);
+
+    return { ...state };
+  })
 );
 
 function getExercisesOfPetOrDefault(
@@ -364,4 +389,17 @@ function getExercisesOfPetOrDefault(
   }
 
   return petExercises;
+}
+
+function getRemindersOfPetOrDefault(
+  reminders: Map<number, RemindersOfPetStateType>,
+  petId: number
+): RemindersOfPetStateType {
+  let petReminders = reminders.get(petId);
+
+  if (!petReminders) {
+    petReminders = { ...defaultRemindersOfPetState };
+  }
+
+  return petReminders;
 }

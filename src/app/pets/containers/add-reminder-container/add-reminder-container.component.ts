@@ -16,7 +16,7 @@ import { Toasty } from "@triniwiz/nativescript-toasty";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddReminderContainerComponent {
-  remindersQuery = this.remindersFacades.query.reminders;
+  remindersQuery: any;
 
   petId!: number;
 
@@ -27,6 +27,7 @@ export class AddReminderContainerComponent {
     private localNotificationsService: LocalNotificationsService
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+    this.remindersQuery = this.remindersFacades.query(this.petId).reminders;
   }
 
   onAddReminder(reminder: Reminder): void {
