@@ -56,7 +56,7 @@ const routes: Routes = [
         component: AddExerciseContainerComponent,
       },
       {
-        path: "exercise/:id/details",
+        path: "pet/:petId/exercise/:exerciseId/details",
         component: ExerciseDetailsContainerComponent,
       },
       {

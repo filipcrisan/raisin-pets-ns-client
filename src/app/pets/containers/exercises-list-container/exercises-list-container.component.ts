@@ -24,7 +24,7 @@ import { distinctUntilChanged, filter, switchMap, tap } from "rxjs";
 export class ExercisesListContainerComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  exercisesQuery = this.exercisesFacades.query.exercises;
+  exercisesQuery: any;
 
   petId!: number;
 
@@ -35,6 +35,7 @@ export class ExercisesListContainerComponent
     private exercisesFacades: ExercisesFacades
   ) {
     this.petId = +this.activatedRoute.snapshot.params["id"];
+    this.exercisesQuery = this.exercisesFacades.query(this.petId).exercises;
   }
 
   ngAfterViewInit(): void {
@@ -87,7 +88,7 @@ export class ExercisesListContainerComponent
 
   onSelectExercise(id: number): void {
     this.routerExtensions
-      .navigate([`pets/dashboard/exercise/${id}/details`])
+      .navigate([`pets/dashboard/pet/${this.petId}/exercise/${id}/details`])
       .then();
   }
 }

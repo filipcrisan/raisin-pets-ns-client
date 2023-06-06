@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { map } from "rxjs";
+import { map, Observable } from "rxjs";
 import { ExercisesFacades } from "../../facades/exercises.facades";
 import { ActivatedRoute } from "@angular/router";
+import { Exercise } from "~/app/pets/models/exercise.model";
 
 @Component({
   selector: "app-exercise-details-container",
@@ -10,17 +11,21 @@ import { ActivatedRoute } from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExerciseDetailsContainerComponent {
-  exercisesQuery = this.exercisesFacades.query.exercises;
+  exercisesQuery: any;
 
   exerciseId!: number;
-  exercise$ = this.exercisesQuery.entities$.pipe(
-    map((x) => x.find((y) => y.id === this.exerciseId))
-  );
+  petId!: number;
+  exercise$: Observable<Exercise>;
 
   constructor(
     private exercisesFacades: ExercisesFacades,
     private activatedRoute: ActivatedRoute
   ) {
-    this.exerciseId = +this.activatedRoute.snapshot.params["id"];
+    this.petId = +this.activatedRoute.snapshot.params["petId"];
+    this.exerciseId = +this.activatedRoute.snapshot.params["exerciseId"];
+    this.exercisesQuery = this.exercisesFacades.query(this.petId).exercises;
+    this.exercise$ = this.exercisesQuery.entities$.pipe(
+      map((x: Exercise[]) => x.find((y) => y.id === this.exerciseId))
+    );
   }
 }

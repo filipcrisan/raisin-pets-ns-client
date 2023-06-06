@@ -1,4 +1,4 @@
-import { createAction } from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 
 export const clearState = createAction("[Pets] Clear state");
 
@@ -16,11 +16,20 @@ export const getTutorialsByCategory = createAction(
 
 export const clearTutorials = createAction("[Pets] Clear tutorials");
 
-export const getAllExercises = createAction("[Pets] Get all exercises");
+export const getAllExercises = createAction(
+  "[Pets] Get all exercises",
+  props<{ petId: number }>()
+);
 
-export const addExercise = createAction("[Pets] Add exercise");
+export const addExercise = createAction(
+  "[Pets] Add exercise",
+  props<{ petId: number }>()
+);
 
-export const deleteExercise = createAction("[Pets] Delete exercise");
+export const deleteExercise = createAction(
+  "[Pets] Delete exercise",
+  props<{ petId: number }>()
+);
 
 export const clearExercises = createAction("[Pets] Clear exercises");
 

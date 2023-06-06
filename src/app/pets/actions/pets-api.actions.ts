@@ -52,12 +52,12 @@ export const getTutorialsByCategoryFailure = createAction(
 
 export const getAllExercisesSuccess = createAction(
   "[Pets/API] Get all exercises Success",
-  props<{ exercises: Exercise[] }>()
+  props<{ petId: number; exercises: Exercise[] }>()
 );
 
 export const getAllExercisesFailure = createAction(
   "[Pets/API] Get all exercises Failure",
-  props<{ error: HttpErrorResponse }>()
+  props<{ petId: number; error: HttpErrorResponse }>()
 );
 
 export const addExerciseSuccess = createAction(
@@ -67,7 +67,7 @@ export const addExerciseSuccess = createAction(
 
 export const addExerciseFailure = createAction(
   "[Pets/API] Add exercise Failure",
-  props<{ error: HttpErrorResponse }>()
+  props<{ petId: number; error: HttpErrorResponse }>()
 );
 
 export const deleteExerciseSuccess = createAction(

@@ -10,15 +10,15 @@ import { Toasty } from "@triniwiz/nativescript-toasty";
 
 @Injectable()
 export class ExercisesFacades {
-  query = {
+  query = (petId: number) => ({
     exercises: {
-      entities$: this.store.select(petsQuery.getExercises),
-      loading$: this.store.select(petsQuery.getExercisesLoading),
-      loaded$: this.store.select(petsQuery.getExercisesLoaded),
-      error$: this.store.select(petsQuery.getExercisesError),
-      saving$: this.store.select(petsQuery.getExercisesSaving),
+      entities$: this.store.select(petsQuery.getExercises(petId)),
+      loading$: this.store.select(petsQuery.getExercisesLoading(petId)),
+      loaded$: this.store.select(petsQuery.getExercisesLoaded(petId)),
+      error$: this.store.select(petsQuery.getExercisesError(petId)),
+      saving$: this.store.select(petsQuery.getExercisesSaving(petId)),
     },
-  };
+  });
 
   constructor(
     private store: Store,
@@ -26,13 +26,13 @@ export class ExercisesFacades {
   ) {}
 
   getAllExercises(petId: number): Observable<Exercise[]> {
-    this.store.dispatch(PetsPageActions.getAllExercises());
+    this.store.dispatch(PetsPageActions.getAllExercises({ petId }));
 
     return this.exercisesService.getAllExercises(petId).pipe(
       tap({
         next: (exercises) => {
           this.store.dispatch(
-            PetsApiActions.getAllExercisesSuccess({ exercises })
+            PetsApiActions.getAllExercisesSuccess({ petId, exercises })
           );
         },
         error: (error: HttpErrorResponse) => {
@@ -40,14 +40,16 @@ export class ExercisesFacades {
             text: "Error upon fetching exercises. Please try again.",
           }).show();
 
-          this.store.dispatch(PetsApiActions.getAllExercisesFailure({ error }));
+          this.store.dispatch(
+            PetsApiActions.getAllExercisesFailure({ petId, error })
+          );
         },
       })
     );
   }
 
   addExercise(exercise: Exercise): Observable<Exercise> {
-    this.store.dispatch(PetsPageActions.addExercise());
+    this.store.dispatch(PetsPageActions.addExercise({ petId: exercise.petId }));
 
     return this.exercisesService.addExercise(exercise).pipe(
       tap({
@@ -59,14 +61,16 @@ export class ExercisesFacades {
             text: "Error upon adding exercise. Please try again.",
           }).show();
 
-          this.store.dispatch(PetsApiActions.addExerciseFailure({ error }));
+          this.store.dispatch(
+            PetsApiActions.addExerciseFailure({ petId: exercise.petId, error })
+          );
         },
       })
     );
   }
 
   deleteExercise(petId: number, exerciseId: number): Observable<Exercise> {
-    this.store.dispatch(PetsPageActions.deleteExercise());
+    this.store.dispatch(PetsPageActions.deleteExercise({ petId }));
 
     return this.exercisesService.deleteExercise(petId, exerciseId).pipe(
       tap({

@@ -3,8 +3,11 @@ import { Pet } from "../models/pet.model";
 import { PetsApiActions, PetsPageActions } from "../actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Tutorial } from "../models/tutorial.model";
-import { Exercise } from "../models/exercise.model";
 import { Reminder } from "../models/reminder.model";
+import {
+  defaultExercisesOfPetState,
+  ExercisesOfPetStateType,
+} from "../models/exercises-of-pet-state-type.model";
 
 export const featureKey = "pets";
 
@@ -21,13 +24,7 @@ export interface State {
     loading: boolean;
     error: HttpErrorResponse;
   };
-  exercises: {
-    entities: Exercise[];
-    loading: boolean;
-    loaded: boolean;
-    saving: boolean;
-    error: HttpErrorResponse;
-  };
+  exercises: Map<number, ExercisesOfPetStateType>;
   reminders: {
     entities: Reminder[];
     loading: boolean;
@@ -50,13 +47,7 @@ export const initialState: State = {
     loading: false,
     error: null,
   },
-  exercises: {
-    entities: [],
-    loading: false,
-    loaded: false,
-    saving: false,
-    error: null,
-  },
+  exercises: new Map<number, ExercisesOfPetStateType>(),
   reminders: {
     entities: [],
     loading: false,
@@ -77,16 +68,22 @@ export const reducer = createReducer(
       error: null,
     },
   })),
-  on(PetsApiActions.getAllPetsSuccess, (state, { pets }) => ({
-    ...state,
-    pets: {
-      ...state.pets,
-      entities: pets,
-      loading: false,
-      loaded: true,
-      error: null,
-    },
-  })),
+  on(PetsApiActions.getAllPetsSuccess, (state, { pets }) => {
+    pets.forEach((pet) => {
+      state.exercises.set(pet.id, { ...defaultExercisesOfPetState });
+    });
+
+    return {
+      ...state,
+      pets: {
+        ...state.pets,
+        entities: pets,
+        loading: false,
+        loaded: true,
+        error: null,
+      },
+    };
+  }),
   on(PetsApiActions.getAllPetsFailure, (state, { error }) => ({
     ...state,
     pets: {
@@ -95,6 +92,7 @@ export const reducer = createReducer(
       loaded: false,
       error: error,
     },
+    exercises: new Map<number, ExercisesOfPetStateType>(),
   })),
   on(
     PetsPageActions.addPet,
@@ -140,6 +138,7 @@ export const reducer = createReducer(
     },
   })),
   on(PetsApiActions.deletePetSuccess, (state, { pet }) => ({
+    // TODO: check if pet details should be erased here
     ...state,
     pets: {
       ...state.pets,
@@ -177,67 +176,112 @@ export const reducer = createReducer(
       error: error,
     },
   })),
-  on(PetsPageActions.getAllExercises, (state) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
+  on(PetsPageActions.getAllExercises, (state, { petId }) => {
+    let exercisesOfPet = getExercisesOfPetOrDefault(state.exercises, petId);
+
+    exercisesOfPet = {
+      ...exercisesOfPet,
       loading: true,
       error: null,
-    },
-  })),
-  on(PetsApiActions.getAllExercisesSuccess, (state, { exercises }) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
+    };
+
+    state.exercises.set(petId, exercisesOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.getAllExercisesSuccess, (state, { petId, exercises }) => {
+    let exercisesOfPet = getExercisesOfPetOrDefault(state.exercises, petId);
+
+    exercisesOfPet = {
+      ...exercisesOfPet,
       entities: exercises,
       loading: false,
       loaded: true,
       error: null,
-    },
-  })),
-  on(PetsApiActions.getAllExercisesFailure, (state, { error }) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
+    };
+
+    state.exercises.set(petId, exercisesOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.getAllExercisesFailure, (state, { petId, error }) => {
+    let exercisesOfPet = getExercisesOfPetOrDefault(state.exercises, petId);
+
+    exercisesOfPet = {
+      ...exercisesOfPet,
       loading: false,
       loaded: false,
       error: error,
-    },
-  })),
-  on(PetsPageActions.addExercise, PetsPageActions.deleteExercise, (state) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
-      saving: true,
-      error: null,
-    },
-  })),
-  on(PetsApiActions.addExerciseSuccess, (state, { exercise }) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
-      entities: [...state.exercises.entities, exercise],
+    };
+
+    state.exercises.set(petId, exercisesOfPet);
+
+    return { ...state };
+  }),
+  on(
+    PetsPageActions.addExercise,
+    PetsPageActions.deleteExercise,
+    (state, { petId }) => {
+      let exercisesOfPet = getExercisesOfPetOrDefault(state.exercises, petId);
+
+      exercisesOfPet = {
+        ...exercisesOfPet,
+        saving: true,
+        error: null,
+      };
+
+      state.exercises.set(petId, exercisesOfPet);
+
+      return { ...state };
+    }
+  ),
+  on(PetsApiActions.addExerciseSuccess, (state, { exercise }) => {
+    let exercisesOfPet = getExercisesOfPetOrDefault(
+      state.exercises,
+      exercise.petId
+    );
+
+    exercisesOfPet = {
+      ...exercisesOfPet,
+      entities: [...exercisesOfPet.entities, exercise],
       saving: false,
       error: null,
-    },
-  })),
-  on(PetsApiActions.addExerciseFailure, (state, { error }) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
+    };
+
+    state.exercises.set(exercise.petId, exercisesOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.addExerciseFailure, (state, { petId, error }) => {
+    let exercisesOfPet = getExercisesOfPetOrDefault(state.exercises, petId);
+
+    exercisesOfPet = {
+      ...exercisesOfPet,
       saving: false,
       error: error,
-    },
-  })),
-  on(PetsApiActions.deleteExerciseSuccess, (state, { exercise }) => ({
-    ...state,
-    exercises: {
-      ...state.exercises,
-      entities: state.exercises.entities.filter((x) => x.id !== exercise.id),
+    };
+
+    state.exercises.set(petId, exercisesOfPet);
+
+    return { ...state };
+  }),
+  on(PetsApiActions.deleteExerciseSuccess, (state, { exercise }) => {
+    let exercisesOfPet = getExercisesOfPetOrDefault(
+      state.exercises,
+      exercise.petId
+    );
+
+    exercisesOfPet = {
+      ...exercisesOfPet,
+      entities: exercisesOfPet.entities.filter((x) => x.id !== exercise.id),
       saving: false,
       error: null,
-    },
-  })),
+    };
+
+    state.exercises.set(exercise.petId, exercisesOfPet);
+
+    return { ...state };
+  }),
   on(PetsPageActions.clearExercises, (state) => ({
     ...state,
     exercises: initialState.exercises,
@@ -308,3 +352,16 @@ export const reducer = createReducer(
     reminders: initialState.reminders,
   }))
 );
+
+function getExercisesOfPetOrDefault(
+  exercises: Map<number, ExercisesOfPetStateType>,
+  petId: number
+): ExercisesOfPetStateType {
+  let petExercises = exercises.get(petId);
+
+  if (!petExercises) {
+    petExercises = { ...defaultExercisesOfPetState };
+  }
+
+  return petExercises;
+}
