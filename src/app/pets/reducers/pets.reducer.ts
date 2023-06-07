@@ -117,7 +117,6 @@ export const reducer = createReducer(
       pets: {
         ...state.pets,
         saving: false,
-        error: error,
       },
     })
   ),
@@ -246,7 +245,6 @@ export const reducer = createReducer(
     exercisesOfPet = {
       ...exercisesOfPet,
       saving: false,
-      error: error,
     };
 
     state.exercises.set(petId, exercisesOfPet);
@@ -352,7 +350,6 @@ export const reducer = createReducer(
     remindersOfPet = {
       ...remindersOfPet,
       saving: false,
-      error: error,
     };
 
     state.reminders.set(petId, remindersOfPet);

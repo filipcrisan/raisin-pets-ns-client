@@ -1,6 +1,6 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
     <ScrollView class="mx-10">
-        <StackLayout [hidden]="saving">
+        <StackLayout [hidden]="saving || error">
             <form [formGroup]="reminderForm">
                 <Label text="Everyday at" class="font-mono fields"></Label>
                 <StackLayout class="m-2 rounded-full border-solid border-2 border-black">
@@ -17,5 +17,6 @@
         </StackLayout>
     </ScrollView>
 
-    <ActivityIndicator [busy]="saving"></ActivityIndicator>
+    <ActivityIndicator [busy]="saving && !error"></ActivityIndicator>
+    <Label [hidden]="saving || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
 </StackLayout>

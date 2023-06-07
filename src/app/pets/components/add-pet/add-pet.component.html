@@ -1,6 +1,6 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
     <ScrollView class="mx-10">
-        <StackLayout [hidden]="saving">
+        <StackLayout [hidden]="saving || error">
             <StackLayout orientation="horizontal" (tap)="onCreateAvatar()" class="rounded-full border-solid border-2 border-black mt-2 w-44 h-11">
                 <Image src="~/assets/icons/camera.png"  class="w-9 h-9 mr-2 ml-3"></Image>
                 <Label text="Create avatar" verticalAlignment="center" class="font-mono mr-3"></Label>
@@ -45,5 +45,6 @@
         </StackLayout>
     </ScrollView>
 
-    <ActivityIndicator [busy]="saving"></ActivityIndicator>
+    <ActivityIndicator [busy]="saving && !error"></ActivityIndicator>
+    <Label [hidden]="saving || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
 </StackLayout>

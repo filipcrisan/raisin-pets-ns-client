@@ -1,5 +1,5 @@
 <StackLayout class="bg-landing-page-yellow pt-20">
-    <StackLayout [hidden]="loading" class="p-3">
+    <StackLayout [hidden]="loading || error" class="p-3">
         <Label textWrap="true" [text]="'#' + exercise.id + ' ' + exercise.name" horizontalAlignment="center" class="font-mono text-3xl mr-3"></Label>
         <Label textWrap="true" [text]="'Total distance: ' + (exercise.totalDistance | number) + 'km'" horizontalAlignment="center" class="font-mono text-xl mr-3"></Label>
         <Label textWrap="true" [text]="'Average speed: ' + (exercise.averageSpeed | number) + 'km/h'" horizontalAlignment="center" class="font-mono text-xl mr-3"></Label>
@@ -7,5 +7,6 @@
         <MapView [width]="mapDimensions.width" [height]="mapDimensions.height" (ready)="onMapReady($event)"></MapView>
     </StackLayout>
 
-    <ActivityIndicator [busy]="loading"></ActivityIndicator>
+    <ActivityIndicator [busy]="loading && !error"></ActivityIndicator>
+    <Label [hidden]="loading || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
 </StackLayout>

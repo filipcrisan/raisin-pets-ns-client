@@ -8,5 +8,6 @@
         </ng-template>
     </StackLayout>
 
-    <ActivityIndicator [busy]="saving || error"></ActivityIndicator>
+    <ActivityIndicator [busy]="saving && !error"></ActivityIndicator>
+    <Label [hidden]="saving || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
 </StackLayout>
