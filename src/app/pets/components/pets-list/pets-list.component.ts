@@ -3,7 +3,9 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
 } from "@angular/core";
 import { Pet } from "../../models/pet.model";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -11,6 +13,7 @@ import { Species } from "../../models/species.model";
 import { Const } from "../../models/constants.model";
 import { Menu } from "nativescript-menu";
 import { Page } from "@nativescript/core";
+import { NgChanges } from "~/app/shared/models/simple-changes-typed";
 
 @Component({
   selector: "app-pets-list",
@@ -18,7 +21,7 @@ import { Page } from "@nativescript/core";
   styleUrls: ["./pets-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PetsListComponent {
+export class PetsListComponent implements OnChanges {
   @Input() pets: Pet[];
   @Input() loading: boolean;
   @Input() loaded: boolean;
@@ -29,6 +32,12 @@ export class PetsListComponent {
   @Output() selectPet = new EventEmitter<number>();
 
   constructor(private page: Page) {}
+
+  ngOnChanges(changes: NgChanges<PetsListComponent>): void {
+    if (changes.pets?.currentValue) {
+      this.pets = [...this.pets].sort((a, b) => a.id - b.id);
+    }
+  }
 
   onActionsTap(id: number): void {
     Menu.popup({
