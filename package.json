@@ -38,7 +38,7 @@
     "@angular/compiler-cli": "~15.0.0",
     "@nativescript/android": "8.5.0",
     "@nativescript/ios": "8.5.1",
-    "@nativescript/preview-cli": "1.0.2",
+    "@nativescript/preview-cli": "1.0.4",
     "@nativescript/types": "~8.4.0",
     "@nativescript/webpack": "~5.0.12",
     "@ngtools/webpack": "~15.0.0",

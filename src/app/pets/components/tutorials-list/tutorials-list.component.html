@@ -13,21 +13,31 @@
   <Label [hidden]="tutorials?.length === 0" textWrap="true" text="These tutorials may be useful:" class="font-mono text-center fields"></Label>
   <Label [hidden]="loading || error || tutorials?.length !== 0" textWrap="true" text="No tutorials yet." class="font-mono text-2xl text-center p-5"></Label>
   <Label [hidden]="loading || !error" textWrap="true" text="Error! Try again." class="font-mono text-2xl text-center p-5"></Label>
-  <ListView [items]="tutorialListItems" class="flex flex-row justify-between items-center">
+  <ListView [items]="tutorialListItems" class="flex flex-row justify-between items-center h-full">
     <ng-template let-tutorialListItem="item" let-i="index" let-tutorial="item.tutorial">
       <StackLayout orientation="vertical" (tap)="onTutorialTap(i)" class="accordion">
-        <FlexboxLayout backgroundColor="White" flexDirection="row" justifyContent="space-between">
-          <Label class="truncate" [text]="tutorial.name"></Label>
-          <StackLayout orientation="vertical" class="flex flex-col justify-center">
-            <Label [text]="Size[tutorial.size] + ' sized ' + Species[tutorial.species]"></Label>
-            <Label [text]="tutorial.minAgeInYears + '-' + tutorial.maxAgeInYears + ' years old'"></Label>
-          </StackLayout>
+        <FlexboxLayout backgroundColor="White" flexDirection="row" justifyContent="space-between" class="h-12">
+          <Label class="font-mono fields truncate w-72 text-center" [text]="tutorial.name"></Label>
           <Image [hidden]="!tutorialListItem.expanded" src="https://img.icons8.com/ios/50/collapse-arrow--v1.png" class="w-3.5 h-3.5 mr-1"></Image>
           <Image [hidden]="tutorialListItem.expanded" src="~/assets/icons/collapse-arrow.png" class="w-3.5 h-3.5 mr-1"></Image>
         </FlexboxLayout>
         <StackLayout backgroundColor="White" [hidden]="!tutorialListItem.expanded">
-          <Label textWrap="true" [text]="'Frequency: ' + tutorial.frequency"></Label>
-          <Label textWrap="true" [text]="'Description: ' + tutorial.content"></Label>
+          <Label textWrap="true" class="text-center font-mono tutorialContent">
+            <Span text="Pet: " fontWeight="bold"></Span>
+            <Span [text]="Size[tutorial.size] + ' sized ' + Species[tutorial.species]"></Span>
+          </Label>
+          <Label textWrap="true" class="text-center font-mono tutorialContent">
+            <Span text="Age: " fontWeight="bold"></Span>
+            <Span [text]="tutorial.minAgeInYears + '-' + tutorial.maxAgeInYears + ' years old'"></Span>
+          </Label>
+          <Label textWrap="true" class="text-center font-mono tutorialContent">
+            <Span text="Frequency: " fontWeight="bold"></Span>
+            <Span [text]="tutorial.frequency"></Span>
+          </Label>
+          <Label textWrap="true" class="text-center font-mono tutorialContent">
+            <Span text="Description: " fontWeight="bold"></Span>
+            <Span [text]="tutorial.content"></Span>
+          </Label>
         </StackLayout>
       </StackLayout>
     </ng-template>
